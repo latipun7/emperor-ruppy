@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "lib": ["ESNext"],
+    "module": "CommonJS",
+    "outDir": "dist",
+    "removeComments": true,
+    "sourceMap": true,
+    "target": "ES2019",
+
+    "strict": true,
+
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "paths": {
+      "lib/*": ["src/lib/*"]
+    },
+
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+
+    "forceConsistentCasingInFileNames": true,
+    "newLine": "lf",
+    "resolveJsonModule": true,
+    "skipLibCheck": true
+  },
+  "exclude": ["node_modules", "dist"],
+  "include": ["src/**/*", "tests/**/*", "typings/**/*"]
+}
