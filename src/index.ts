@@ -1,11 +1,10 @@
 import logger from 'lib/logger';
-import RuppyClient from './ruppy';
+import RuppyClient from 'structures/RuppyClient';
+import { Bot } from './configs';
 
-const client = new RuppyClient({
-  ownerID: process.env.OWNER_ID,
-  botToken: process.env.BOT_TOKEN,
-});
+const client = new RuppyClient(Bot);
 
-client.start().catch((err: unknown) => {
-  logger.error('Something happened when login!', err);
-});
+client
+  .start()
+  .then(() => logger.info('Login successfully~'))
+  .catch((error) => logger.error('Something happened when login!', error));

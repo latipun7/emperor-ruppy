@@ -1,4 +1,3 @@
-export interface ClientConfig {
-  ownerID?: string;
-  botToken?: string;
-}
+import type { Bot } from 'src/configs';
+
+export type ClientConfig = typeof Bot;

@@ -15,7 +15,11 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "paths": {
-      "lib/*": ["src/lib/*"]
+      "commands/*": ["src/commands/*"],
+      "inhibitors/*": ["src/inhibitors/*"],
+      "lib/*": ["src/lib/*"],
+      "listeners/*": ["src/listeners/*"],
+      "structures/*": ["src/structures/*"]
     },
 
     "noFallthroughCasesInSwitch": true,
