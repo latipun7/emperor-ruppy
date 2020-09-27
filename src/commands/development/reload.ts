@@ -32,8 +32,8 @@ export default class ReloadCommand extends RuppyCommand {
           type: Argument.union('commandAlias', 'listener', 'inhibitor'),
           match: 'content',
           prompt: {
-            start: 'Which module do you want to reload?',
-            retry: 'Invalid module provided, try again',
+            start: 'which module do you want to reload?',
+            retry: 'Invalid module provided.',
           },
         },
       ],

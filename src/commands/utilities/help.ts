@@ -24,7 +24,7 @@ export default class HelpCommand extends RuppyCommand {
           type: 'commandAlias',
           prompt: {
             optional: true,
-            retry: 'Invalid arguments provided. Please try again.',
+            retry: 'Invalid argument provided.',
           },
         },
       ],
