@@ -1,4 +1,6 @@
+import { stripIndent } from 'common-tags';
 import { createLogger, format, transports, addColors } from 'winston';
+import { isEmptyObject } from 'lib/utils';
 
 // Configure the Winston logger.
 // For the complete documentation see https://github.com/winstonjs/winston
@@ -26,6 +28,32 @@ const config = {
   },
 };
 
+const rest = (info: Record<string, unknown>) => {
+  if (isEmptyObject(info)) {
+    return '';
+  }
+
+  return JSON.stringify(
+    {
+      ...info,
+      level: undefined,
+      message: undefined,
+      splat: undefined,
+      label: undefined,
+    },
+    null,
+    2
+  );
+};
+
+const customFormat = format.printf(
+  ({ level, message, timestamp, ...meta }) =>
+    stripIndent`
+      ${timestamp} [${level}] - ${message}
+      ${rest(meta)}
+    `
+);
+
 addColors(config.colors);
 
 const logger = createLogger({
@@ -33,10 +61,12 @@ const logger = createLogger({
   level: 'ok',
   format: format.combine(
     format.colorize({ level: true }),
+    format.timestamp(),
+    format.errors({ stack: true }),
     format.splat(),
-    format.simple()
+    customFormat
   ),
-  transports: [new transports.Console()],
+  transports: [new transports.Console({ handleExceptions: true })],
 });
 
 export default logger;

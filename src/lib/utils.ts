@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 /**
  * Capitalizes the first letter of a string
  * @param text Text to capitalize
@@ -40,4 +39,12 @@ export function startTimer(): () => number {
 
     throw new TypeError('Diff was larger than `Number.MAX_SAFE_INTEGER`');
   };
+}
+
+/**
+ * Check if object is empty or not.
+ * @param obj the object to check
+ */
+export function isEmptyObject(obj: Record<string, unknown>) {
+  return obj.toString() === '[object Object]' && JSON.stringify(obj) === '{}';
 }
