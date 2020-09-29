@@ -1,5 +1,5 @@
 import { MessageEmbed } from 'discord.js';
-import { stripIndent } from 'common-tags';
+import { stripIndents } from 'common-tags';
 import { CmdCategories, RuppyCommand } from 'structures/RuppyCommand';
 import { capitalizeFirstCharacter } from 'lib/utils';
 import type { Message } from 'discord.js';
@@ -16,6 +16,8 @@ export default class HelpCommand extends RuppyCommand {
       description: {
         content:
           'Display list of available commands and detailed information of specific command.',
+        usage: '[command]',
+        examples: ['', 'ping'],
       },
       clientPermissions: ['EMBED_LINKS'],
       args: [
@@ -43,15 +45,19 @@ export default class HelpCommand extends RuppyCommand {
 
     if (command) {
       const [primaryCommandAlias] = command.aliases;
+      const { content, examples, usage } = command.description;
 
       embed
+        .setColor('#41B0FD')
         .setTitle(`${capitalizeFirstCharacter(primaryCommandAlias)} Command`)
-        .addField('Description', command.description.content)
+        .addField('Description', content)
         .addField(
           'Usage',
-          `\`${prefix}${primaryCommandAlias}${
-            command.description.usage ? ` ${command.description.usage}` : ''
-          }\``
+          stripIndents`
+            \`${prefix}${primaryCommandAlias}${usage ? ` ${usage}` : ''}\`
+
+            _Note: \`[ ]\` means optional, \`< >\` means required._
+          `
         );
 
       if (command.aliases.length > 1) {
@@ -61,14 +67,14 @@ export default class HelpCommand extends RuppyCommand {
         );
       }
 
-      if (command.description.examples) {
+      if (examples) {
         embed.addField(
           'Examples',
-          stripIndent`
+          stripIndents`
             \`\`\`
-            ${command.description.examples
+            ${examples
               .map((sample) => `${prefix}${primaryCommandAlias} ${sample}`)
-              .join('\n')}
+              .join('\n\nor\n\n')}
             \`\`\`
           `
         );
@@ -77,10 +83,12 @@ export default class HelpCommand extends RuppyCommand {
       return message.util?.send(embed);
     }
 
-    embed.setTitle('Commands');
-    embed.setDescription(
-      `For additional help for a command use \`${prefix}help <Command>\``
-    );
+    embed
+      .setTitle('Commands')
+      .setColor('#41B0FD')
+      .setDescription(
+        `For additional info for a command use \`${prefix}help <command>\``
+      );
 
     const authorIsOwner = this.client.isOwner(message.author);
 

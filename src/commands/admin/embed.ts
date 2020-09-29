@@ -20,11 +20,12 @@ export default class EmbedCommand extends RuppyCommand {
       userPermissions: ['MANAGE_CHANNELS'],
       description: {
         content: 'Create / send custom message as embed in given channel.',
+        usage: '<url-of-raw-json-embed-options> <channel>',
+        examples: ['', 'https://sourceb.in/raw/b37f59d120/0 #my-channel'],
       },
       args: [
         {
           id: 'embedOptionsLink',
-          match: 'content',
           type: 'url',
           prompt: {
             start:
@@ -34,7 +35,6 @@ export default class EmbedCommand extends RuppyCommand {
         },
         {
           id: 'textChannel',
-          match: 'content',
           type: 'textChannel',
           prompt: {
             start: 'enter channel ID the embed to send',
