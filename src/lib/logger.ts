@@ -40,6 +40,8 @@ const rest = (info: Record<string, unknown>) => {
       message: undefined,
       splat: undefined,
       label: undefined,
+      timestamp: undefined,
+      stack: undefined,
     },
     null,
     2
@@ -47,10 +49,11 @@ const rest = (info: Record<string, unknown>) => {
 };
 
 const customFormat = format.printf(
-  ({ level, message, timestamp, ...meta }) =>
+  ({ level, message, timestamp, stack, ...meta }) =>
     stripIndent`
-      ${timestamp} [${level}] - ${message}
+      ${timestamp} ${level} - ${message}
       ${rest(meta)}
+      ${stack || ''}
     `
 );
 

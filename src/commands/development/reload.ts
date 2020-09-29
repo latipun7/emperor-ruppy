@@ -47,6 +47,25 @@ export default class ReloadCommand extends RuppyCommand {
 
     try {
       reloaded = args.module.reload();
+
+      const elapsed = endTimer();
+
+      let type = 'module';
+
+      if (reloaded instanceof Command) {
+        type = 'command';
+      } else if (reloaded instanceof Listener) {
+        type = 'listener';
+      } else if (reloaded instanceof Inhibitor) {
+        type = 'inhibitor';
+      }
+
+      return await message.util?.send(
+        oneLine`
+          Reloaded ${type} \`${reloaded.categoryID}:${reloaded.id}\`
+          in ${ms(elapsed)}
+        `
+      );
     } catch (error) {
       return await message.util?.send(
         stripIndent`
@@ -57,24 +76,5 @@ export default class ReloadCommand extends RuppyCommand {
         `
       );
     }
-
-    const elapsed = endTimer();
-
-    let type = 'module';
-
-    if (reloaded instanceof Command) {
-      type = 'command';
-    } else if (reloaded instanceof Listener) {
-      type = 'listener';
-    } else if (reloaded instanceof Inhibitor) {
-      type = 'inhibitor';
-    }
-
-    return message.util?.send(
-      oneLine`
-        Reloaded ${type} \`${reloaded.categoryID}:${reloaded.id}\`
-        in ${ms(elapsed)}
-      `
-    );
   }
 }
