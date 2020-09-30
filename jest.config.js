@@ -9,7 +9,6 @@ const { compilerOptions } = require('./tsconfig.json');
 /** @typedef {import('ts-jest')} */
 /** @type {import('@jest/types').Config.InitialOptions} */
 module.exports = {
-  preset: '@shelf/jest-mongodb',
   testTimeout: 15000,
   moduleDirectories: ['node_modules', '<rootDir>'],
   verbose: true,
