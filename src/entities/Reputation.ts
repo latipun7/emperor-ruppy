@@ -13,13 +13,13 @@ export default class Reputation extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @Column({ nullable: false })
+  @Column()
   userID!: string;
 
   @Column({ length: 25 })
   channelID!: string;
 
-  @ManyToOne('User', 'reputations', { eager: true })
+  @ManyToOne('User', 'reputations')
   @JoinColumn({ name: 'userID' })
   user!: User;
 }

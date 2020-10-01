@@ -22,6 +22,7 @@ export default class RuppyClient extends AkairoClient {
         messageCacheLifetime: 15 * 60,
         messageSweepInterval: 1 * 60,
         presence: RuppyPresence,
+        partials: ['MESSAGE', 'REACTION', 'USER', 'CHANNEL'],
         ws: { intents: Intents.NON_PRIVILEGED },
       }
     );

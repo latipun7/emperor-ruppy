@@ -13,7 +13,7 @@ export default class ReactionRole extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @Column({ length: 25, nullable: false })
+  @Column({ length: 25 })
   guildID!: string;
 
   @Column({ length: 25 })
@@ -22,10 +22,13 @@ export default class ReactionRole extends BaseEntity {
   @Column({ length: 25 })
   messageID!: string;
 
-  @Column('varchar', { length: 25, array: true })
-  roles!: string[];
+  @Column({ length: 100 })
+  emoji!: string;
 
-  @ManyToOne('Guild', 'reactionRoles', { eager: true })
+  @Column({ length: 25 })
+  role!: string;
+
+  @ManyToOne('Guild', 'reactionRoles')
   @JoinColumn({ name: 'guildID', referencedColumnName: 'guildID' })
   guild!: Guild;
 }

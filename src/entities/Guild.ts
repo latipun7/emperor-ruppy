@@ -4,16 +4,16 @@ import type User from './User';
 
 @Entity()
 export default class Guild extends BaseEntity {
-  @PrimaryColumn({ length: 25, unique: true, nullable: false })
+  @PrimaryColumn({ length: 25, unique: true })
   guildID!: string;
 
-  @Column({ length: 15 })
+  @Column({ length: 15, nullable: true })
   prefix!: string;
 
-  @Column('varchar', { length: 25, array: true })
+  @Column('varchar', { length: 25, array: true, nullable: true })
   adminRoles!: string[];
 
-  @Column('varchar', { length: 25, array: true })
+  @Column('varchar', { length: 25, array: true, nullable: true })
   modRoles!: string[];
 
   @OneToMany('User', 'guild')
