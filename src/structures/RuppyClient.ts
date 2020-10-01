@@ -4,8 +4,10 @@ import {
   InhibitorHandler,
   ListenerHandler,
 } from 'discord-akairo';
+import { Intents } from 'discord.js';
 import { resolve } from 'path';
 import { stripIndent } from 'common-tags';
+import Guild from 'entities/Guild';
 import { RuppyPresence } from 'src/configs';
 import type { Message } from 'discord.js';
 import type { ClientConfig } from 'typings/ruppy';
@@ -20,6 +22,7 @@ export default class RuppyClient extends AkairoClient {
         messageCacheLifetime: 15 * 60,
         messageSweepInterval: 1 * 60,
         presence: RuppyPresence,
+        ws: { intents: Intents.NON_PRIVILEGED },
       }
     );
   }
@@ -63,8 +66,9 @@ export default class RuppyClient extends AkairoClient {
     },
     prefix: async (message: Message) => {
       if (message.guild) {
-        // TODO: add guild specific settings
-        return this.config.defaultPrefix;
+        const guild = await Guild.findOne(message.guild.id);
+
+        return guild?.prefix || this.config.defaultPrefix;
       }
       return this.config.defaultPrefix;
     },

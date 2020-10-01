@@ -1,10 +1,23 @@
 import logger from 'lib/logger';
 import RuppyClient from 'structures/RuppyClient';
 import { Bot } from './configs';
+import connectDB from './database';
 
-const client = new RuppyClient(Bot);
+connectDB()
+  .then(() => {
+    logger.info('Database connected~');
 
-client
-  .start()
-  .then(() => logger.info('Login successfully~'))
-  .catch((error) => logger.error('Something happened when login!', error));
+    const client = new RuppyClient(Bot);
+
+    client
+      .start()
+      .then(() => logger.info('Login successfully~'))
+      .catch((error) => {
+        logger.error('Something happened when login!', error);
+        process.exit(1);
+      });
+  })
+  .catch((error) => {
+    logger.error('Database error!', error);
+    process.exit(1);
+  });

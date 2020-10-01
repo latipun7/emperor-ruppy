@@ -6,7 +6,7 @@ export const RuppyPresence: PresenceData = {
 };
 
 export const Bot = {
-  owners: [Admin.LATIPUN, Admin.DYFA] as Snowflake[],
+  owners: [Admin.LATIPUN] as Snowflake[],
   token: process.env.DISCORD__BOT_TOKEN,
   defaultPrefix: '$',
 };

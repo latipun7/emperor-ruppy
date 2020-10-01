@@ -1,6 +1,5 @@
 export const enum Admin {
   LATIPUN = '145459537288101888',
-  DYFA = '379044746947067904',
 }
 
 export const Emojis = {
