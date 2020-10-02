@@ -3,7 +3,6 @@ import User from 'entities/User';
 import Guild from 'entities/Guild';
 import Reputation from 'entities/Reputation';
 import RuppyListener from 'structures/RuppyListener';
-import { THANKS_REGEX } from 'src/constants';
 import type { Message, User as DiscordUser } from 'discord.js';
 
 export default class ReputationMessageListener extends RuppyListener {
@@ -38,18 +37,19 @@ export default class ReputationMessageListener extends RuppyListener {
     // TODO: add cooldown for thanking same user, cancel thanks, etc
     // PARTIAL_GIVE = '⏳';
     // NO_GIVE = '❌';
+    const THANKS_REGEX = /(thanks|thx|ty|tyvm|tysm|thanku|thank you|thank u|makasih|terima kasih|terimakasih)+/gi;
     const thanksMatch = THANKS_REGEX.exec(message.content);
 
     if (message.author.bot || !message.guild || !thanksMatch) return;
-    await message.react('👍');
-    const guildID = message.guild?.id;
-    const mentionUsers = message.mentions.users.array();
 
-    if (!mentionUsers.length) return;
+    try {
+      const guildID = message.guild?.id;
+      const mentionUsers = message.mentions.users.array();
 
-    for (const mentionUser of mentionUsers) {
-      if (mentionUser.id !== message.author.id && !mentionUser.bot) {
-        try {
+      if (!mentionUsers.length) return;
+
+      for (const mentionUser of mentionUsers) {
+        if (mentionUser.id !== message.author.id && !mentionUser.bot) {
           const user = await this.getOrMakeUser(mentionUser, guildID);
 
           await Reputation.create({
@@ -59,10 +59,10 @@ export default class ReputationMessageListener extends RuppyListener {
             messageID: message.id,
           }).save();
           await message.react('👍');
-        } catch (error) {
-          this.logger.error('ReputationMessage error:', error);
         }
       }
+    } catch (error) {
+      this.logger.error('ReputationMessage error:', error);
     }
   }
 }
