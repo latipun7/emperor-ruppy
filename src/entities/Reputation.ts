@@ -21,6 +21,9 @@ export default class Reputation extends BaseEntity {
   @Column({ length: 25 })
   channelID!: string;
 
+  @Column({ length: 25 })
+  messageID!: string;
+
   @CreateDateColumn()
   createdAt!: Date;
 
@@ -28,6 +31,6 @@ export default class Reputation extends BaseEntity {
   updatedAt!: Date;
 
   @ManyToOne('User', 'reputations')
-  @JoinColumn({ name: 'userID' })
+  @JoinColumn({ name: 'userID', referencedColumnName: 'userID' })
   user!: User;
 }

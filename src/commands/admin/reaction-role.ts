@@ -1,4 +1,4 @@
-import { oneLine } from 'common-tags';
+import { oneLine, stripIndent } from 'common-tags';
 import { CmdCategories, RuppyCommand } from 'structures/RuppyCommand';
 import ReactionRole from 'entities/ReactionRole';
 import Guild from 'entities/Guild';
@@ -53,20 +53,37 @@ export default class ReactionRoleCommand extends RuppyCommand {
   }
 
   public async exec(msg: Message, { message, emoji, role }: CmdArgs) {
-    await message.react(emoji);
+    try {
+      await message.react(emoji);
 
-    const guild = new Guild();
-    guild.guildID = role.guild.id;
-    await guild.save();
+      let guild = await Guild.findOne(role.guild.id);
 
-    const reactRole = new ReactionRole();
-    reactRole.messageID = message.id;
-    reactRole.channelID = message.channel.id;
-    reactRole.guild = guild;
-    reactRole.emoji = emoji.toString();
-    reactRole.role = role.id;
-    await reactRole.save();
+      if (!guild) {
+        guild = await Guild.create({ guildID: role.guild.id }).save();
+      }
 
-    return msg.util?.send(oneLine`Reaction role added to ${message.url}`);
+      await ReactionRole.create({
+        messageID: message.id,
+        channelID: message.channel.id,
+        emoji: emoji.toString(),
+        role: role.id,
+        guild,
+      }).save();
+
+      return await msg.util?.send(
+        oneLine`Reaction role added to ${message.url}`
+      );
+    } catch (error) {
+      this.logger.error('Reaction Role Command error:', error);
+
+      return await message.util?.send(
+        stripIndent`
+          Sorry, something went wrong. Please tell developer with this info:
+          \`\`\`js
+          ${new Date().toISOString()}
+          \`\`\`
+        `
+      );
+    }
   }
 }

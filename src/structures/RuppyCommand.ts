@@ -7,6 +7,7 @@ export const enum CmdCategories {
   Admin = 'admin',
   Develop = 'development',
   Util = 'utilities',
+  Reputation = 'reputation',
 }
 
 interface RuppyCommandOptions extends CommandOptions {

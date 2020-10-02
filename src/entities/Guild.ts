@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToMany,
   OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
@@ -24,8 +25,8 @@ export default class Guild extends BaseEntity {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @OneToMany('User', 'guild')
-  users!: Promise<User[]>;
+  @ManyToMany('User', 'guilds')
+  users!: User[];
 
   @OneToMany('ReactionRole', 'guild')
   reactionRoles!: Promise<ReactionRole[]>;

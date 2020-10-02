@@ -1,12 +1,11 @@
 import {
   BaseEntity,
-  Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  ManyToOne,
+  JoinTable,
+  ManyToMany,
   OneToMany,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import type Guild from './Guild';
@@ -14,14 +13,8 @@ import type Reputation from './Reputation';
 
 @Entity()
 export default class User extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id!: string;
-
-  @Column({ length: 25 })
+  @PrimaryColumn({ length: 25, unique: true })
   userID!: string;
-
-  @Column({ nullable: true })
-  guildID!: string;
 
   @CreateDateColumn()
   createdAt!: Date;
@@ -29,9 +22,12 @@ export default class User extends BaseEntity {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @ManyToOne('Guild', 'users')
-  @JoinColumn({ name: 'guildID', referencedColumnName: 'guildID' })
-  guild!: Guild;
+  @ManyToMany('Guild', 'users')
+  @JoinTable({
+    joinColumn: { name: 'userID', referencedColumnName: 'userID' },
+    inverseJoinColumn: { name: 'guildID', referencedColumnName: 'guildID' },
+  })
+  guilds!: Guild[];
 
   @OneToMany('Reputation', 'user')
   reputations!: Reputation;
