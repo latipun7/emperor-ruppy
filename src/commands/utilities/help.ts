@@ -34,7 +34,7 @@ export default class HelpCommand extends RuppyCommand {
   }
 
   public async exec(message: Message, { command }: CmdArgs) {
-    const embed = new MessageEmbed();
+    const embed = new MessageEmbed().setColor('#41B0FD');
     let prefixes = await (this.handler.prefix as PrefixSupplier)(message);
 
     if (Array.isArray(prefixes)) {
@@ -48,15 +48,18 @@ export default class HelpCommand extends RuppyCommand {
       const { content, examples, usage } = command.description;
 
       embed
-        .setColor('#41B0FD')
         .setTitle(`${capitalizeFirstCharacter(primaryCommandAlias)} Command`)
+        .setDescription(
+          stripIndents`
+            Detailed usage of the command.
+            _Note on usage: \`[ ]\` means optional, \`< >\` means required._
+          `
+        )
         .addField('Description', content)
         .addField(
           'Usage',
           stripIndents`
             \`${prefix}${primaryCommandAlias}${usage ? ` ${usage}` : ''}\`
-
-            _Note: \`[ ]\` means optional, \`< >\` means required._
           `
         );
 
@@ -85,7 +88,6 @@ export default class HelpCommand extends RuppyCommand {
 
     embed
       .setTitle('Commands')
-      .setColor('#41B0FD')
       .setDescription(
         `For additional info for a command use \`${prefix}help <command>\``
       );
