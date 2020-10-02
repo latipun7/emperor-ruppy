@@ -39,7 +39,10 @@ export default class ReputationLeaderboardCommand extends RuppyCommand {
       if (channel) {
         const rawData: RawData = await Reputation.createQueryBuilder('rep')
           .select(['rep.userID', 'COUNT(*)'])
-          .where('rep.channelID = :id', { id: channel.id })
+          .where('rep.guildID = :gid AND rep.channelID = :cid', {
+            gid: message.guild?.id,
+            cid: channel.id,
+          })
           .groupBy('rep.userID')
           .orderBy('COUNT(*)', 'DESC')
           .limit(10)
@@ -51,7 +54,9 @@ export default class ReputationLeaderboardCommand extends RuppyCommand {
         }));
 
         embed
-          .setTitle('Top 10 Most Reputable Person')
+          .setTitle(
+            stripIndent`Top 10 Most Reputable Person in #${channel.name}`
+          )
           .setDescription(
             data
               .map(
@@ -78,7 +83,9 @@ export default class ReputationLeaderboardCommand extends RuppyCommand {
       }));
 
       embed
-        .setTitle('Top 10 Most Reputable Person')
+        .setTitle(
+          stripIndent`Top 10 Most Reputable Person in ${message.guild?.name}`
+        )
         .setDescription(
           data
             .map(
