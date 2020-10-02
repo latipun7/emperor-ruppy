@@ -1,11 +1,13 @@
 import {
   BaseEntity,
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import type Guild from './Guild';
 import type Reputation from './Reputation';
@@ -20,6 +22,12 @@ export default class User extends BaseEntity {
 
   @Column({ nullable: true })
   guildID!: string;
+
+  @CreateDateColumn()
+  createdAt!: Date;
+
+  @UpdateDateColumn()
+  updatedAt!: Date;
 
   @ManyToOne('Guild', 'users')
   @JoinColumn({ name: 'guildID', referencedColumnName: 'guildID' })

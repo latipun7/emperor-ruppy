@@ -1,10 +1,12 @@
 import {
   BaseEntity,
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import type User from './User';
 
@@ -18,6 +20,12 @@ export default class Reputation extends BaseEntity {
 
   @Column({ length: 25 })
   channelID!: string;
+
+  @CreateDateColumn()
+  createdAt!: Date;
+
+  @UpdateDateColumn()
+  updatedAt!: Date;
 
   @ManyToOne('User', 'reputations')
   @JoinColumn({ name: 'userID' })

@@ -1,4 +1,12 @@
-import { BaseEntity, Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import type ReactionRole from './ReactionRole';
 import type User from './User';
 
@@ -10,11 +18,11 @@ export default class Guild extends BaseEntity {
   @Column({ length: 15, nullable: true })
   prefix!: string;
 
-  @Column('varchar', { length: 25, array: true, nullable: true })
-  adminRoles!: string[];
+  @CreateDateColumn()
+  createdAt!: Date;
 
-  @Column('varchar', { length: 25, array: true, nullable: true })
-  modRoles!: string[];
+  @UpdateDateColumn()
+  updatedAt!: Date;
 
   @OneToMany('User', 'guild')
   users!: Promise<User[]>;

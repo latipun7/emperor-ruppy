@@ -1,10 +1,12 @@
 import {
   BaseEntity,
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import type Guild from './Guild';
 
@@ -27,6 +29,12 @@ export default class ReactionRole extends BaseEntity {
 
   @Column({ length: 25 })
   role!: string;
+
+  @CreateDateColumn()
+  createdAt!: Date;
+
+  @UpdateDateColumn()
+  updatedAt!: Date;
 
   @ManyToOne('Guild', 'reactionRoles')
   @JoinColumn({ name: 'guildID', referencedColumnName: 'guildID' })
