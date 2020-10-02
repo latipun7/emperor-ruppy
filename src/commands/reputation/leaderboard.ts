@@ -15,6 +15,7 @@ export default class ReputationLeaderboardCommand extends RuppyCommand {
   public constructor() {
     super('reputation-leaderboard', {
       category: CmdCategories.Reputation,
+      channel: 'guild',
       description: {
         content:
           'Leaderboard of reputation, see who is the most helpful person.',
@@ -65,6 +66,7 @@ export default class ReputationLeaderboardCommand extends RuppyCommand {
 
       const rawData: RawData = await Reputation.createQueryBuilder('rep')
         .select(['rep.userID', 'COUNT(*)'])
+        .where('rep.guildID = :id', { id: message.guild?.id })
         .groupBy('rep.userID')
         .orderBy('COUNT(*)', 'DESC')
         .limit(10)

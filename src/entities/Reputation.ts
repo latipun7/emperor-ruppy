@@ -19,6 +19,9 @@ export default class Reputation extends BaseEntity {
   userID!: string;
 
   @Column({ length: 25 })
+  guildID!: string;
+
+  @Column({ length: 25 })
   channelID!: string;
 
   @Column({ length: 25 })
