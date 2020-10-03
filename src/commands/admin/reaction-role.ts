@@ -1,7 +1,9 @@
+import { Argument } from 'discord-akairo';
+import emojiRegex from 'emoji-regex/es2015';
 import { oneLine, stripIndent } from 'common-tags';
 import { CmdCategories, RuppyCommand } from 'structures/RuppyCommand';
-import ReactionRole from 'entities/ReactionRole';
 import Guild from 'entities/Guild';
+import ReactionRole from 'entities/ReactionRole';
 import type { EmojiResolvable, Message, Role } from 'discord.js';
 
 interface CmdArgs {
@@ -32,7 +34,15 @@ export default class ReactionRoleCommand extends RuppyCommand {
         },
         {
           id: 'emoji',
-          type: 'emoji',
+          type: Argument.union(
+            'emoji',
+            Argument.validate('string', (_, userInput) => {
+              const regex = emojiRegex();
+              const match = regex.exec(userInput);
+
+              return !!match;
+            })
+          ),
           prompt: {
             start:
               'enter the custom emoji in this server or the default emoji for react!',

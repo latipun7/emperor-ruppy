@@ -15,7 +15,7 @@
   },
   "scripts": {
     "build": "yarn test:all && tsc",
-    "dev": "ts-node -r tsconfig-paths/register -r dotenv/config ./src/index.ts",
+    "dev": "ts-node --files -r tsconfig-paths/register -r dotenv/config ./src/index.ts",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx --fix --color --cache .",
     "format": "prettier --write .",
     "start": "pm2 --name emperor-ruppy --node-args \"-r ./tsconfig-paths-bootstrap.js -r dotenv/config\" start dist/src",
@@ -28,6 +28,7 @@
     "discord-akairo": "^8.1.0",
     "discord.js": "^12.3.1",
     "dotenv": "^8.2.0",
+    "emoji-regex": "^9.0.0",
     "pg": "^8.3.3",
     "pretty-ms": "^7.0.1",
     "reflect-metadata": "^0.1.13",
