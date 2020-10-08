@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import { MessageEmbed } from 'discord.js';
 import { oneLine, stripIndent } from 'common-tags';
 import { isEmptyObject } from 'lib/utils';
 import { CmdCategories, RuppyCommand } from 'structures/RuppyCommand';
@@ -51,12 +52,12 @@ export default class EmbedCommand extends RuppyCommand {
   ) {
     try {
       const {
-        data: embed,
+        data: receivedEmbed,
       }: AxiosResponse<MessageEmbedOptions> = await Axios.get(
         embedOptionsLink.toString()
       );
 
-      if (isEmptyObject({ ...embed })) {
+      if (isEmptyObject({ ...receivedEmbed })) {
         return await message.util?.send(
           'Sorry, the URL you provide has empty embed options.'
         );
@@ -64,7 +65,10 @@ export default class EmbedCommand extends RuppyCommand {
       // TODO: add more validation, using `ajv` ( https://github.com/ajv-validator/ajv )
       // https://discordjs.guide/popular-topics/embeds.html#embed-limits
 
-      await textChannel.send({ embed });
+      const now = new Date();
+      const embed = new MessageEmbed(receivedEmbed).setTimestamp(now);
+
+      await textChannel.send(embed);
       return await message.util?.send(
         oneLine`Embed message successfully sent to ${textChannel}`
       );
