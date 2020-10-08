@@ -3,7 +3,7 @@ import { stripIndents } from 'common-tags';
 import { CmdCategories, RuppyCommand } from 'structures/RuppyCommand';
 import { capitalizeFirstCharacter } from 'lib/utils';
 import type { Message } from 'discord.js';
-import type { PrefixSupplier } from 'discord-akairo';
+import type { Category } from 'discord-akairo';
 
 interface CmdArgs {
   command?: RuppyCommand;
@@ -35,13 +35,7 @@ export default class HelpCommand extends RuppyCommand {
 
   public async exec(message: Message, { command }: CmdArgs) {
     const embed = new MessageEmbed().setColor('#41B0FD');
-    let prefixes = await (this.handler.prefix as PrefixSupplier)(message);
-
-    if (Array.isArray(prefixes)) {
-      [prefixes] = prefixes;
-    }
-
-    const prefix = prefixes;
+    const prefix = await this.getPrefix(message);
 
     if (command) {
       const [primaryCommandAlias] = command.aliases;
@@ -64,9 +58,11 @@ export default class HelpCommand extends RuppyCommand {
         );
 
       if (command.aliases.length > 1) {
+        const aliases = RuppyCommand.getAliases(command);
+
         embed.addField(
           'Aliases',
-          command.aliases.map((alias) => `\`${alias}\``).join(', ')
+          aliases ? aliases.map((alias) => `\`${alias}\``).join(', ') : '\u200B'
         );
       }
 
@@ -86,29 +82,49 @@ export default class HelpCommand extends RuppyCommand {
       return message.util?.send(embed);
     }
 
-    embed
-      .setTitle('Commands')
-      .setDescription(
-        `For additional info for a command use \`${prefix}help <command>\``
-      );
+    embed.setTitle('Commands Help').setDescription(
+      stripIndents`
+        For additional info for a command use \`${prefix}help <command>\`
+
+        __Note__:
+        Add prefix \`${prefix}\` in front of the command. Example: \`${prefix}ping\`.
+        Or you could mention the bot, then the command. Example: ${this.client.user} ping
+      `
+    );
 
     const authorIsOwner = this.client.isOwner(message.author);
+    const categories = this.handler.categories.values() as IterableIterator<
+      Category<string, RuppyCommand>
+    >;
 
-    this.handler.categories.forEach((category, id) => {
+    for (const category of categories) {
       // Only show categories if any of the following are true
       // 	1. The message author is an owner
       // 	2. Some commands are not owner-only
       if (authorIsOwner || category.some((cmd) => !cmd.ownerOnly)) {
         embed.addField(
-          capitalizeFirstCharacter(id),
+          capitalizeFirstCharacter(category.id),
           category
-            // Remove owner-only commands if you are not an owner
-            .filter((cmd) => (authorIsOwner ? true : !cmd.ownerOnly))
-            .map((cmd) => `\`${cmd.aliases[0]}\``)
-            .join(', ')
+            // Remove owner-only commands if you are not an owner & remove sub-commands
+            .filter((cmd) => {
+              const isOwnerOnlyForOwner = authorIsOwner ? true : !cmd.ownerOnly;
+              const isNotSubCmd = cmd.aliases.length > 0;
+
+              return isOwnerOnlyForOwner && isNotSubCmd;
+            })
+            .map((cmd) => {
+              const aliases = RuppyCommand.getAliases(cmd);
+              const mapAlias = aliases?.map((alias) => `${alias}`).join(', ');
+
+              return `[\`${cmd.aliases[0]}\`](https://ruppy.io "${
+                cmd.description.content
+              }${mapAlias ? `\n\nAlias: ${mapAlias}` : ''}")`;
+            })
+            .join(', '),
+          true
         );
       }
-    });
+    }
 
     return message.util?.send(embed);
   }

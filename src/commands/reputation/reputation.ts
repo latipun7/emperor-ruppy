@@ -2,7 +2,7 @@ import { Flag } from 'discord-akairo';
 import { stripIndent } from 'common-tags';
 import { CmdCategories, RuppyCommand } from 'structures/RuppyCommand';
 import type { Message } from 'discord.js';
-import type { ArgumentOptions, PrefixSupplier } from 'discord-akairo';
+import type { ArgumentOptions } from 'discord-akairo';
 
 export default class ReputationCommand extends RuppyCommand {
   public constructor() {
@@ -10,7 +10,13 @@ export default class ReputationCommand extends RuppyCommand {
       aliases: ['rep', 'thanks', 'gratitude'],
       category: CmdCategories.Reputation,
       description: {
-        content: 'Gratitude for helper with giving them reputation points.',
+        content: stripIndent`
+          Gratitude for helper with giving them reputation points.
+
+          Available methods:
+          • leaderboard \`[channel]\`
+          • profile \`[user]\`
+        `,
         usage: '<method> [...arguments]',
         examples: [
           'leaderboard',
@@ -22,14 +28,15 @@ export default class ReputationCommand extends RuppyCommand {
     });
   }
 
-  public *args(): IterableIterator<ArgumentOptions | Flag> {
+  public *args(): Generator<ArgumentOptions> {
     const method = yield {
       type: [
         ['reputation-leaderboard', 'leaderboard', 'lb'],
         ['reputation-profile', 'profile'],
       ],
-      otherwise: (message: Message) => {
-        const prefix = (this.handler.prefix as PrefixSupplier)(message);
+      otherwise: async (message: Message) => {
+        const prefix = await this.getPrefix(message);
+
         return stripIndent`
           Can't process your request.
           Check \`${prefix}help reputation\` for more information.
@@ -37,6 +44,6 @@ export default class ReputationCommand extends RuppyCommand {
       },
     };
 
-    return Flag.continue((method as unknown) as string);
+    return Flag.continue(method as string);
   }
 }

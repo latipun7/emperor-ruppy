@@ -1,8 +1,8 @@
+import { MessageEmbed } from 'discord.js';
 import { stripIndent } from 'common-tags';
+import Reputation from 'entities/Reputation';
 import { CmdCategories, RuppyCommand } from 'structures/RuppyCommand';
 import type { Message, TextChannel } from 'discord.js';
-import { MessageEmbed } from 'discord.js';
-import Reputation from 'entities/Reputation';
 
 interface CmdArgs {
   channel?: TextChannel;
@@ -14,6 +14,7 @@ type RawData = { rep_userID: string; count: string }[];
 export default class ReputationLeaderboardCommand extends RuppyCommand {
   public constructor() {
     super('reputation-leaderboard', {
+      isSubCmd: true,
       category: CmdCategories.Reputation,
       channel: 'guild',
       description: {

@@ -1,6 +1,7 @@
 import { Command } from 'discord-akairo';
 import logger from 'lib/logger';
-import type { CommandOptions } from 'discord-akairo';
+import type { Message } from 'discord.js';
+import type { CommandOptions, PrefixSupplier } from 'discord-akairo';
 import type RuppyClient from './RuppyClient';
 
 export const enum CmdCategories {
@@ -11,6 +12,7 @@ export const enum CmdCategories {
 }
 
 interface RuppyCommandOptions extends CommandOptions {
+  isSubCmd?: boolean;
   category: CmdCategories;
   description: {
     content: string;
@@ -31,18 +33,45 @@ export class RuppyCommand extends Command {
   public client!: RuppyClient;
 
   public constructor(id: string, options: RuppyCommandOptions) {
-    const opt = options;
+    const opt = Object.create(options) as RuppyCommandOptions;
 
-    if (opt.aliases) {
-      if (!opt.aliases.includes(id)) {
-        opt.aliases.unshift(id);
+    if (!opt.isSubCmd) {
+      if (opt.aliases) {
+        if (!opt.aliases.includes(id)) {
+          opt.aliases.unshift(id);
+        }
+      } else {
+        opt.aliases = [id];
       }
-    } else {
-      opt.aliases = [id];
     }
 
-    super(id, options);
+    delete opt.isSubCmd;
+
+    super(id, opt);
 
     this.logger = logger;
+  }
+
+  public async getPrefix(message: Message) {
+    let prefixes = await (this.handler.prefix as PrefixSupplier)(message);
+
+    if (Array.isArray(prefixes)) {
+      [prefixes] = prefixes;
+    }
+
+    const prefix = prefixes;
+
+    return prefix;
+  }
+
+  static getAliases(cmd: RuppyCommand) {
+    if (cmd.aliases.length > 1) {
+      const alias = Array.from(cmd.aliases);
+
+      alias.shift();
+      return alias;
+    }
+
+    return undefined;
   }
 }
