@@ -37,7 +37,7 @@ export default class ReputationMessageListener extends RuppyListener {
     // TODO: add cooldown for thanking same user, cancel thanks, etc
     // PARTIAL_GIVE = '⏳';
     // NO_GIVE = '❌';
-    const THANKS_REGEX = /(thanks|thx|ty|tyvm|tysm|thanku|thank you|thank u|makasih|terima kasih|terimakasih)+/gi;
+    const THANKS_REGEX = /\b(?:thanks|thx|ty|tyvm|tysm|thanku|thank you|thank u|makasih|terima kasih|terimakasih)\b/i;
     const thanksMatch = THANKS_REGEX.exec(message.content);
 
     if (message.author.bot || !message.guild || !thanksMatch) return;
