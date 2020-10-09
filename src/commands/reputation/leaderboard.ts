@@ -36,6 +36,7 @@ export default class ReputationLeaderboardCommand extends RuppyCommand {
   public async exec(message: Message, { channel }: CmdArgs) {
     try {
       const embed = new MessageEmbed().setColor('#FF8809');
+      const rankEmojis = ['🥇', '🥈', '🥉'];
 
       if (channel) {
         const rawData: RawData = await Reputation.createQueryBuilder('rep')
@@ -61,10 +62,12 @@ export default class ReputationLeaderboardCommand extends RuppyCommand {
           .setDescription(
             data
               .map(
-                (datum) =>
-                  `🏅 **<@${datum.id}>** with **${datum.count}** points.`
+                (datum, index) =>
+                  `${rankEmojis[index] || '🎗️'} **<@${datum.id}>** with **${
+                    datum.count
+                  }** points.`
               )
-              .join('\n')
+              .join('\n\n')
           );
 
         return await message.util?.send(embed);
@@ -90,9 +93,12 @@ export default class ReputationLeaderboardCommand extends RuppyCommand {
         .setDescription(
           data
             .map(
-              (datum) => `🏅 **<@${datum.id}>** with **${datum.count}** points.`
+              (datum, index) =>
+                `${rankEmojis[index] || '🎗️'} **<@${datum.id}>** with **${
+                  datum.count
+                }** points.`
             )
-            .join('\n')
+            .join('\n\n')
         );
 
       return await message.util?.send(embed);
