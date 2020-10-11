@@ -34,20 +34,25 @@ export default class ReputationLeaderboardCommand extends RuppyCommand {
   }
 
   public async exec(message: Message, { channel }: CmdArgs) {
+    if (!message.guild) return message.util?.send('guild / server only');
+
     try {
       const embed = new MessageEmbed().setColor('#FF8809');
       const rankEmojis = ['🥇', '🥈', '🥉'];
+      const gid = message.guild?.id;
 
       if (channel) {
+        const cid = channel.id;
         const rawData: RawData = await Reputation.createQueryBuilder('rep')
           .select(['rep.userID', 'COUNT(*)'])
           .where('rep.guildID = :gid AND rep.channelID = :cid', {
-            gid: message.guild?.id,
-            cid: channel.id,
+            gid,
+            cid,
           })
           .groupBy('rep.userID')
           .orderBy('COUNT(*)', 'DESC')
           .limit(10)
+          .cache(`${cid}_channel_rep`)
           .getRawMany();
 
         const data = rawData.map((datum) => ({
@@ -79,6 +84,7 @@ export default class ReputationLeaderboardCommand extends RuppyCommand {
         .groupBy('rep.userID')
         .orderBy('COUNT(*)', 'DESC')
         .limit(10)
+        .cache(`${gid}_guild_rep`)
         .getRawMany();
 
       const data = rawData.map((datum) => ({

@@ -1,4 +1,5 @@
 /* eslint-disable no-await-in-loop */
+import { getConnection } from 'typeorm';
 import User from 'entities/User';
 import Guild from 'entities/Guild';
 import Reputation from 'entities/Reputation';
@@ -44,6 +45,7 @@ export default class ReputationMessageListener extends RuppyListener {
 
     try {
       const guildID = message.guild?.id;
+      const channelID = message.channel.id;
       const mentionUsers = message.mentions.users.array();
 
       if (!mentionUsers.length) return;
@@ -52,10 +54,14 @@ export default class ReputationMessageListener extends RuppyListener {
         if (mentionUser.id !== message.author.id && !mentionUser.bot) {
           const user = await this.getOrMakeUser(mentionUser, guildID);
 
+          await getConnection().queryResultCache?.remove([
+            `${guildID}_guild_rep`,
+            `${channelID}_channel_rep`,
+          ]);
           await Reputation.create({
             user,
             guildID,
-            channelID: message.channel.id,
+            channelID,
             messageID: message.id,
           }).save();
           await message.react('👍');

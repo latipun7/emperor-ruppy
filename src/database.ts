@@ -6,11 +6,14 @@ import User from 'entities/User';
 import ReactionRole from 'entities/ReactionRole';
 import { Infra } from './configs';
 
+const MAX_INTEGER = 2147483647;
+
 export default async function connectDB() {
   return createConnection({
     type: 'postgres',
     url: Infra.dbURI,
     synchronize: true,
+    cache: { duration: MAX_INTEGER },
     logging: ['error', 'warn'],
     logger: 'advanced-console',
     entities: [Guild, Reputation, User, ReactionRole],
