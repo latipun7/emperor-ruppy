@@ -9,6 +9,7 @@ export default class ReputationCommand extends RuppyCommand {
     super('reputation', {
       aliases: ['rep', 'thanks', 'gratitude'],
       category: CmdCategories.Reputation,
+      channel: 'guild',
       ratelimit: 2,
       description: {
         content: stripIndent`
