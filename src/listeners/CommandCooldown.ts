@@ -16,7 +16,10 @@ export default class CommandCooldownListener extends RuppyListener {
       await message.react('⌚');
 
       setTimeout(() => {
-        message.reactions.removeAll().catch((err) => this.logger.error(err));
+        message.reactions.cache
+          .get('⌚')
+          ?.users?.remove()
+          .catch((err) => this.logger.error(err));
       }, remaining);
     } catch (error) {
       this.logger.error('CommandCooldown error:', error);
