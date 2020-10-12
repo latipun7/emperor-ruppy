@@ -2,9 +2,9 @@ import ReactionRole from 'entities/ReactionRole';
 import RuppyListener from 'structures/RuppyListener';
 import type { MessageReaction, User } from 'discord.js';
 
-export default class MessageReactionRemoveListener extends RuppyListener {
+export default class ReactionRoleRemoveListener extends RuppyListener {
   public constructor() {
-    super('messageReactionRemove', {
+    super('ReactionRoleRemove', {
       emitter: 'client',
       event: 'messageReactionRemove',
     });
@@ -34,7 +34,7 @@ export default class MessageReactionRemoveListener extends RuppyListener {
         await Promise.all(removeRoles);
       }
     } catch (error) {
-      this.logger.error('messageReactionRemove error:', error);
+      this.logger.error('ReactionRoleRemove error:', error);
     }
   }
 }

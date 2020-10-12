@@ -2,9 +2,9 @@ import ReactionRole from 'entities/ReactionRole';
 import RuppyListener from 'structures/RuppyListener';
 import type { MessageReaction, User } from 'discord.js';
 
-export default class MessageReactionAddListener extends RuppyListener {
+export default class ReactionRoleAddListener extends RuppyListener {
   public constructor() {
-    super('messageReactionAdd', {
+    super('ReactionRoleAdd', {
       emitter: 'client',
       event: 'messageReactionAdd',
     });
@@ -34,7 +34,7 @@ export default class MessageReactionAddListener extends RuppyListener {
         await Promise.all(giveRoles);
       }
     } catch (error) {
-      this.logger.error('messageReactionAdd error:', error);
+      this.logger.error('ReactionRoleAdd error:', error);
     }
   }
 }

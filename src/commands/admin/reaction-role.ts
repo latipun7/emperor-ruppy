@@ -14,7 +14,7 @@ interface CmdArgs {
 
 export default class ReactionRoleCommand extends RuppyCommand {
   public constructor() {
-    super('reactionrole', {
+    super('reaction-role', {
       aliases: ['react-role'],
       category: CmdCategories.Admin,
       ratelimit: 2,

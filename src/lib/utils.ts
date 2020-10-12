@@ -3,7 +3,7 @@
  * @param text Text to capitalize
  */
 export function capitalizeFirstCharacter(text: string): string {
-  return text.replace(new RegExp(`^${text[0]}`), (firstCharacter) =>
+  return text.replace(/(?:\b\w)/gi, (firstCharacter) =>
     firstCharacter.toUpperCase()
   );
 }
@@ -45,6 +45,6 @@ export function startTimer(): () => number {
  * Check if object is empty or not.
  * @param obj the object to check
  */
-export function isEmptyObject(obj: Record<string, unknown>) {
+export function isEmptyObject(obj: Record<string, unknown>): boolean {
   return obj.toString() === '[object Object]' && JSON.stringify(obj) === '{}';
 }

@@ -90,9 +90,11 @@ export default class HelpCommand extends RuppyCommand {
         For additional info for a command use \`${prefix}help <command>\`
 
         __Note__:
-        Add prefix \`${prefix}\` in front of the command. Example: \`${prefix}ping\`.
-        Or you could mention the bot, then the command. Example: ${this.client.user} ping
-        When command has ⌚ reaction on it, it means you are on cooldown of that command.
+        • Add prefix \`${prefix}\` in front of the command. Example: \`${prefix}ping\`.
+        • Or you could mention the bot, then the command. Example: ${this.client.user} ping
+        • When command has ⌚ reaction on it, it means you are on cooldown of that command.
+        • Commands or aliases containing dash ( \`-\` ), would be valid with or without it.
+          Example: command \`reaction-role\` is valid as both \`reaction-role\` or \`reactionrole\`
 
         Below are all the available commands:
         \u200B

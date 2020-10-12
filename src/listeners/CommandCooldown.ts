@@ -4,7 +4,7 @@ import RuppyListener from 'structures/RuppyListener';
 
 export default class CommandCooldownListener extends RuppyListener {
   public constructor() {
-    super('commandCooldown', {
+    super('CommandCooldown', {
       emitter: 'commandHandler',
       category: 'commandHandler',
       event: 'cooldown',
@@ -12,10 +12,14 @@ export default class CommandCooldownListener extends RuppyListener {
   }
 
   public async exec(message: Message, _: RuppyCommand, remaining: number) {
-    await message.react('⌚');
+    try {
+      await message.react('⌚');
 
-    setTimeout(() => {
-      message.reactions.removeAll().catch((err) => this.logger.error(err));
-    }, remaining);
+      setTimeout(() => {
+        message.reactions.removeAll().catch((err) => this.logger.error(err));
+      }, remaining);
+    } catch (error) {
+      this.logger.error('CommandCooldown error:', error);
+    }
   }
 }

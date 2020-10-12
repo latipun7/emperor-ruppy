@@ -8,7 +8,7 @@ import type { Message, User as DiscordUser } from 'discord.js';
 
 export default class ReputationMessageListener extends RuppyListener {
   public constructor() {
-    super('reputationMessage', {
+    super('ReputationMessage', {
       emitter: 'client',
       event: 'message',
     });
