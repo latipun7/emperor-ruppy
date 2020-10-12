@@ -34,9 +34,10 @@ export default class RuppyClient extends AkairoClient {
     aliasReplacement: /-/g,
     handleEdits: true,
     commandUtil: true,
+    defaultCooldown: 15 * 1000,
     argumentDefaults: {
       prompt: {
-        time: 30000,
+        time: 55 * 1000,
         retries: 3,
         cancel: 'Command has been cancelled.',
         timeout: ({ author }: Message) =>

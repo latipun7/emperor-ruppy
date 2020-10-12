@@ -17,6 +17,7 @@ export default class EmbedCommand extends RuppyCommand {
     super('embed', {
       category: CmdCategories.Admin,
       channel: 'guild',
+      ratelimit: 2,
       clientPermissions: ['EMBED_LINKS'],
       userPermissions: ['MANAGE_CHANNELS'],
       description: {

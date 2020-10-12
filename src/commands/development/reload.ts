@@ -21,6 +21,7 @@ export default class ReloadCommand extends RuppyCommand {
       ],
       category: CmdCategories.Develop,
       ownerOnly: true,
+      cooldown: 0,
       description: {
         content: 'Reload a module (command, listener, or inhibitor).',
         usage: '<module>',

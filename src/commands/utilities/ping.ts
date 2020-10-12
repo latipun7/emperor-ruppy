@@ -7,6 +7,7 @@ export default class PingCommand extends RuppyCommand {
     super('ping', {
       aliases: ['hello', 'heart-beat'],
       category: CmdCategories.Util,
+      ratelimit: 2,
       description: { content: "Checks the bot's ping to the Discord server." },
     });
   }

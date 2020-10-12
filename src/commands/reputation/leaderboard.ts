@@ -17,6 +17,7 @@ export default class ReputationLeaderboardCommand extends RuppyCommand {
       isSubCmd: true,
       category: CmdCategories.Reputation,
       channel: 'guild',
+      ratelimit: 1,
       description: {
         content:
           'Leaderboard of reputation, see who is the most helpful person.',

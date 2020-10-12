@@ -17,6 +17,7 @@ export default class ReactionRoleCommand extends RuppyCommand {
     super('reactionrole', {
       aliases: ['react-role'],
       category: CmdCategories.Admin,
+      ratelimit: 2,
       clientPermissions: ['MANAGE_ROLES', 'ADD_REACTIONS'],
       userPermissions: ['MANAGE_ROLES'],
       channel: 'guild',

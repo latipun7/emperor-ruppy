@@ -13,6 +13,7 @@ export default class HelpCommand extends RuppyCommand {
   public constructor() {
     super('help', {
       category: CmdCategories.Util,
+      ratelimit: 1,
       description: {
         content:
           'Display list of available commands and detailed information of specific command.',
@@ -73,7 +74,7 @@ export default class HelpCommand extends RuppyCommand {
             \`\`\`
             ${examples
               .map((sample) => `${prefix}${primaryCommandAlias} ${sample}`)
-              .join('\n\nor\n\n')}
+              .join('\n\n')}
             \`\`\`
           `
         );
@@ -82,15 +83,22 @@ export default class HelpCommand extends RuppyCommand {
       return message.util?.send(embed);
     }
 
-    embed.setTitle('Commands Help').setDescription(
-      stripIndents`
+    embed
+      .setTitle('Commands Help')
+      .setDescription(
+        stripIndents`
         For additional info for a command use \`${prefix}help <command>\`
 
         __Note__:
         Add prefix \`${prefix}\` in front of the command. Example: \`${prefix}ping\`.
         Or you could mention the bot, then the command. Example: ${this.client.user} ping
+        When command has ⌚ reaction on it, it means you are on cooldown of that command.
+
+        Below are all the available commands:
+        \u200B
       `
-    );
+      )
+      .setFooter('Hover over command for basic additional info.');
 
     const authorIsOwner = this.client.isOwner(message.author);
     const categories = this.handler.categories.values() as IterableIterator<

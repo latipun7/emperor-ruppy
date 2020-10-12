@@ -9,13 +9,14 @@ export default class ReputationCommand extends RuppyCommand {
     super('reputation', {
       aliases: ['rep', 'thanks', 'gratitude'],
       category: CmdCategories.Reputation,
+      ratelimit: 2,
       description: {
         content: stripIndent`
           Gratitude for helper with giving them reputation points.
 
           Available methods:
-          • leaderboard \`[channel]\`
-          • profile \`[user]\`
+          • \`<leaderboard | lb> [channel]\`
+          • \`<profile> [user]\`
         `,
         usage: '<method> [...arguments]',
         examples: [
