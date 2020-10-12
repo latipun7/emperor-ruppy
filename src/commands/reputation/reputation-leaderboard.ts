@@ -8,8 +8,7 @@ interface CmdArgs {
   channel?: TextChannel;
 }
 
-// eslint-disable-next-line camelcase
-type RawData = { rep_userID: string; count: string }[];
+type RawData = { repUserID: string; count: string }[];
 
 export default class ReputationLeaderboardCommand extends RuppyCommand {
   public constructor() {
@@ -40,12 +39,12 @@ export default class ReputationLeaderboardCommand extends RuppyCommand {
     try {
       const embed = new MessageEmbed().setColor('#FF8809');
       const rankEmojis = ['🥇', '🥈', '🥉'];
-      const gid = message.guild?.id;
+      const gid = message.guild.id;
 
       if (channel) {
         const cid = channel.id;
         const rawData: RawData = await Reputation.createQueryBuilder('rep')
-          .select(['rep.userID', 'COUNT(*)'])
+          .select(['rep.userID AS "repUserID"', 'COUNT(*)'])
           .where('rep.guildID = :gid AND rep.channelID = :cid', {
             gid,
             cid,
@@ -57,7 +56,7 @@ export default class ReputationLeaderboardCommand extends RuppyCommand {
           .getRawMany();
 
         const data = rawData.map((datum) => ({
-          id: datum.rep_userID,
+          id: datum.repUserID,
           count: parseInt(datum.count, 10),
         }));
 
@@ -80,8 +79,8 @@ export default class ReputationLeaderboardCommand extends RuppyCommand {
       }
 
       const rawData: RawData = await Reputation.createQueryBuilder('rep')
-        .select(['rep.userID', 'COUNT(*)'])
-        .where('rep.guildID = :id', { id: message.guild?.id })
+        .select(['rep.userID AS "repUserID"', 'COUNT(*)'])
+        .where('rep.guildID = :id', { id: gid })
         .groupBy('rep.userID')
         .orderBy('COUNT(*)', 'DESC')
         .limit(10)
@@ -89,13 +88,13 @@ export default class ReputationLeaderboardCommand extends RuppyCommand {
         .getRawMany();
 
       const data = rawData.map((datum) => ({
-        id: datum.rep_userID,
+        id: datum.repUserID,
         count: parseInt(datum.count, 10),
       }));
 
       embed
         .setTitle(
-          stripIndent`Top 10 Most Reputable Person in ${message.guild?.name}`
+          stripIndent`Top 10 Most Reputable Person in ${message.guild.name}`
         )
         .setDescription(
           data

@@ -57,6 +57,8 @@ export default class ReputationMessageListener extends RuppyListener {
           await getConnection().queryResultCache?.remove([
             `${guildID}_guild_rep`,
             `${channelID}_channel_rep`,
+            `${guildID}_${mentionUser.id}_guild_member_rep`,
+            `${guildID}_${mentionUser.id}_channel_member_rep`,
           ]);
           await Reputation.create({
             user,
