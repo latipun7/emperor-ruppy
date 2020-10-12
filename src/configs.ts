@@ -14,3 +14,5 @@ export const Bot = {
 export const Infra = {
   dbURI: process.env.DB_URI,
 };
+
+export const isProduction = process.env.NODE_ENV === 'production' || false;
