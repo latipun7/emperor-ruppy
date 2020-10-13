@@ -8,7 +8,7 @@ interface CmdArgs {
   member?: GuildMember;
 }
 
-type UserRawData = { repUserID: string; count: string };
+type UserRawData = { repUserID: string; count: string } | undefined;
 type ChannelRawData = { repChannelID: string; count: string }[];
 
 export default class ReputationProfileCommand extends RuppyCommand {
@@ -69,8 +69,8 @@ export default class ReputationProfileCommand extends RuppyCommand {
         .getRawMany();
 
       const userData = {
-        id: userRawData.repUserID,
-        count: parseInt(userRawData.count, 10),
+        id: userRawData?.repUserID,
+        count: parseInt(userRawData?.count || '0', 10),
       };
 
       const channelData = channelRawData.map((datum) => ({
