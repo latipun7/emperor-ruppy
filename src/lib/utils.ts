@@ -3,7 +3,7 @@
  * @param text Text to capitalize
  */
 export function capitalizeFirstCharacter(text: string): string {
-  return text.replace(/(?:\b\w)/gi, (firstCharacter) =>
+  return text.replace(/(?:\b\w)(?!.*:|.*>)/gi, (firstCharacter) =>
     firstCharacter.toUpperCase()
   );
 }

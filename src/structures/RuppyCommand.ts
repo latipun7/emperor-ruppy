@@ -1,19 +1,20 @@
 import { Command } from 'discord-akairo';
 import logger from 'lib/logger';
+import { Emojis } from 'src/constants';
 import type { Message } from 'discord.js';
 import type { CommandOptions, PrefixSupplier } from 'discord-akairo';
 import type RuppyClient from './RuppyClient';
 
-export const enum CmdCategories {
-  Admin = 'admin',
-  Develop = 'development',
-  Util = 'utilities',
-  Reputation = 'reputation',
-}
+export const CmdCategories = {
+  Admin: `${Emojis.ADMINISTRATION} admin`,
+  Develop: `${Emojis.DEVELOPMENT} development`,
+  Info: `${Emojis.INFORMATION} information`,
+  Util: '🛠 utilities',
+  Reputation: `${Emojis.REPUTATION} reputation`,
+};
 
 interface RuppyCommandOptions extends CommandOptions {
   isSubCmd?: boolean;
-  category: CmdCategories;
   description: {
     content: string;
     usage?: string;
@@ -52,19 +53,17 @@ export class RuppyCommand extends Command {
     this.logger = logger;
   }
 
-  public async getPrefix(message: Message) {
+  public async getPrefix(message: Message): Promise<string> {
     let prefixes = await (this.handler.prefix as PrefixSupplier)(message);
 
     if (Array.isArray(prefixes)) {
       [prefixes] = prefixes;
     }
 
-    const prefix = prefixes;
-
-    return prefix;
+    return prefixes;
   }
 
-  static getAliases(cmd: RuppyCommand) {
+  static getAliases(cmd: RuppyCommand): string[] | undefined {
     if (cmd.aliases.length > 1) {
       const alias = Array.from(cmd.aliases);
 
