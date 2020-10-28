@@ -86,10 +86,8 @@ export default class ReputationProfileCommand extends RuppyCommand {
         )
         .setDescription('Reputation profile with breakdown of top 5 channels.')
         .setThumbnail(
-          member?.user.avatarURL({ dynamic: true }) ||
-            member?.user.defaultAvatarURL ||
-            message.member.user.avatarURL({ dynamic: true }) ||
-            message.member.user.defaultAvatarURL
+          member?.user.displayAvatarURL({ dynamic: true }) ??
+            message.member.user.displayAvatarURL({ dynamic: true })
         )
         .addField('Total', userData.count);
 
