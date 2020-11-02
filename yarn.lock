@@ -1826,10 +1826,10 @@ escodegen@^1.14.1:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-prettier@^6.11.0:
-  version "6.12.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.12.0.tgz#9eb2bccff727db1c52104f0b49e87ea46605a0d2"
-  integrity sha512-9jWPlFlgNwRUYVoujvWTQ1aMO8o6648r+K7qU7K5Jmkbyqav1fuEZC0COYpGBxyiAJb65Ra9hrmFx19xRGwXWw==
+eslint-config-prettier@^6.11.0, eslint-config-prettier@^6.12.0:
+  version "6.15.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.15.0.tgz#7f93f6cb7d45a92f1537a70ecc06366e1ac6fed9"
+  integrity sha512-a1+kOYLR8wMGustcgAjdydMsQ2A/2ipRPwRKUmfYaSxc9ZPcrku080Ctl6zrZzZNs/U82MjSv+qKREkoq3bJaw==
   dependencies:
     get-stdin "^6.0.0"
 
@@ -1853,12 +1853,12 @@ eslint-config-ruppy-node@^1.3.1:
   dependencies:
     eslint-config-ruppy-base "^1.4.0"
 
-eslint-config-ruppy-ts@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/eslint-config-ruppy-ts/-/eslint-config-ruppy-ts-1.2.1.tgz#eb6fa31e3b1e0de392b10a71f8063c8a99eda3bf"
-  integrity sha512-1L22UE++Kj3rT1LzGo9r6vAjau7NGbdHL5cIhGo+fzH8n7Y2M6Cbk8+iBChQ85e1UmcvJtBFSHf7BDMgl9Ykmg==
+eslint-config-ruppy-ts@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-ruppy-ts/-/eslint-config-ruppy-ts-1.4.0.tgz#05a17c668c5f1d59bb11e95df7c02a9772d70932"
+  integrity sha512-2KwhBKLK7/quUJmtn4IJnpcutGL0mCFyehfFxrkQIui+JDmAcoeC6vJIojbs/u9Z9c2cjL2oDFYnQlE4aDjUJg==
   dependencies:
-    eslint-config-prettier "^6.11.0"
+    eslint-config-prettier "^6.12.0"
     eslint-import-resolver-typescript "^2.3.0"
 
 eslint-import-resolver-node@^0.3.4:
