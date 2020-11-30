@@ -10,6 +10,7 @@ import type { URL } from 'url';
 interface CmdArgs {
   embedOptionsLink: URL;
   textChannel: TextChannel;
+  msgID?: Message;
 }
 
 export default class EmbedCommand extends RuppyCommand {
@@ -23,7 +24,11 @@ export default class EmbedCommand extends RuppyCommand {
       description: {
         content: 'Create / send custom message as embed in given channel.',
         usage: '<url-of-raw-json-embed-options> <channel>',
-        examples: ['', 'https://sourceb.in/raw/b37f59d120/0 #my-channel'],
+        examples: [
+          '',
+          'https://sourceb.in/raw/b37f59d120/0 #my-channel',
+          'https://sourceb.in/raw/b37f59d120/0 #my-channel 779996697132138506',
+        ],
       },
       args: [
         {
@@ -43,13 +48,22 @@ export default class EmbedCommand extends RuppyCommand {
             retry: 'Channel not found with that ID.',
           },
         },
+        {
+          id: 'msgID',
+          type: 'message',
+          prompt: {
+            optional: true,
+            start: 'enter message ID for edit, otherwise, leave it "0"',
+            retry: 'Message not found with that ID.',
+          },
+        },
       ],
     });
   }
 
   public async exec(
     message: Message,
-    { embedOptionsLink, textChannel }: CmdArgs
+    { embedOptionsLink, textChannel, msgID }: CmdArgs
   ) {
     try {
       const {
@@ -69,9 +83,15 @@ export default class EmbedCommand extends RuppyCommand {
       const now = new Date();
       const embed = new MessageEmbed(receivedEmbed).setTimestamp(now);
 
+      if (msgID) {
+        await msgID.edit(embed);
+        return await message.util?.send(
+          oneLine`Message successfully edited with embed. Link: ${msgID.url}`
+        );
+      }
       await textChannel.send(embed);
       return await message.util?.send(
-        oneLine`Embed message successfully sent to ${textChannel}`
+        oneLine`Embed message successfully sent to ${textChannel}.`
       );
     } catch (error) {
       this.logger.error('Embed Command error:', error);
