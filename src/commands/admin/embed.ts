@@ -51,10 +51,10 @@ export default class EmbedCommand extends RuppyCommand {
         },
         {
           id: 'msgID',
-          type: 'message',
+          type: 'relevantMessage',
           prompt: {
             optional: true,
-            start: 'enter message ID for edit, otherwise, leave it "0"',
+            start: 'enter message ID by this bot for edit',
             retry: 'Message not found with that ID.',
           },
         },
@@ -90,20 +90,33 @@ export default class EmbedCommand extends RuppyCommand {
           oneLine`Message successfully edited with embed. Link: ${msgID.url}`
         );
       }
+
       await textChannel.send(embed);
       return await message.util?.send(
         oneLine`Embed message successfully sent to ${textChannel}.`
       );
-    } catch (error) {
+    } catch (error: unknown) {
       this.logger.error('Embed Command error:', error);
+
+      if (error instanceof Error) {
+        return await message.util?.send(
+          stripIndent`
+            Sorry, something went wrong. Error info:
+            \`\`\`js
+            ${error.message}
+            ${new Date().toISOString()}
+            \`\`\`
+          `
+        );
+      }
 
       return await message.util?.send(
         stripIndent`
-          Sorry, something went wrong. Please tell developer with this info:
-          \`\`\`js
-          ${new Date().toISOString()}
-          \`\`\`
-        `
+            Sorry, something went wrong. Error info:
+            \`\`\`js
+            ${new Date().toISOString()}
+            \`\`\`
+          `
       );
     }
   }
