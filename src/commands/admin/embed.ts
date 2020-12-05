@@ -112,11 +112,11 @@ export default class EmbedCommand extends RuppyCommand {
 
       return await message.util?.send(
         stripIndent`
-            Sorry, something went wrong. Error info:
-            \`\`\`js
-            ${new Date().toISOString()}
-            \`\`\`
-          `
+          Sorry, something went wrong. Error info:
+          \`\`\`js
+          ${new Date().toISOString()}
+          \`\`\`
+        `
       );
     }
   }
