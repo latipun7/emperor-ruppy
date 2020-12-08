@@ -3,13 +3,18 @@ import { MessageEmbed } from 'discord.js';
 import { oneLine, stripIndent } from 'common-tags';
 import { isEmptyObject } from 'lib/utils';
 import { CmdCategories, RuppyCommand } from 'structures/RuppyCommand';
-import type { Message, MessageEmbedOptions, TextChannel } from 'discord.js';
+import type {
+  Message,
+  MessageEmbedOptions,
+  NewsChannel,
+  TextChannel,
+} from 'discord.js';
 import type { AxiosResponse } from 'axios';
 import type { URL } from 'url';
 
 interface CmdArgs {
   embedOptionsLink: URL;
-  textChannel: TextChannel;
+  textChannel: NewsChannel | TextChannel;
   msgID?: Message;
 }
 
@@ -43,7 +48,7 @@ export default class EmbedCommand extends RuppyCommand {
         },
         {
           id: 'textChannel',
-          type: 'textChannel',
+          type: 'channel',
           prompt: {
             start: 'enter channel ID the embed to send',
             retry: 'Channel not found with that ID.',

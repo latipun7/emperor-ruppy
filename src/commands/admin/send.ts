@@ -1,9 +1,9 @@
 import { oneLine, stripIndent } from 'common-tags';
 import { CmdCategories, RuppyCommand } from 'structures/RuppyCommand';
-import type { Message, TextChannel } from 'discord.js';
+import type { Message, NewsChannel, TextChannel } from 'discord.js';
 
 interface CmdArgs {
-  textChannel: TextChannel;
+  textChannel: NewsChannel | TextChannel;
   msgID?: Message;
   msgs: string;
 }
@@ -27,7 +27,7 @@ export default class SendCommand extends RuppyCommand {
       args: [
         {
           id: 'textChannel',
-          type: 'textChannel',
+          type: 'channel',
           prompt: {
             start: 'enter channel ID the message to send',
             retry: 'Channel not found with that ID.',
