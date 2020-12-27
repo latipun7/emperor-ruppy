@@ -23,7 +23,7 @@
     "test:all": "rimraf dist && yarn lint && yarn format && yarn test"
   },
   "dependencies": {
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "common-tags": "^1.8.0",
     "discord-akairo": "^8.1.0",
     "discord.js": "^12.5.1",
