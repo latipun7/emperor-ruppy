@@ -1770,13 +1770,6 @@ escodegen@^1.14.1:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-prettier@^6.12.0:
-  version "6.15.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.15.0.tgz#7f93f6cb7d45a92f1537a70ecc06366e1ac6fed9"
-  integrity sha512-a1+kOYLR8wMGustcgAjdydMsQ2A/2ipRPwRKUmfYaSxc9ZPcrku080Ctl6zrZzZNs/U82MjSv+qKREkoq3bJaw==
-  dependencies:
-    get-stdin "^6.0.0"
-
 eslint-config-prettier@^8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-8.1.0.tgz#4ef1eaf97afe5176e6a75ddfb57c335121abc5a6"
@@ -1802,13 +1795,13 @@ eslint-config-ruppy-node@^1.5.1:
   dependencies:
     eslint-config-ruppy-base "^1.6.0"
 
-eslint-config-ruppy-ts@^1.4.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/eslint-config-ruppy-ts/-/eslint-config-ruppy-ts-1.4.1.tgz#1d2bf23cdf33d6fe4fdc576daecc22e79c916bf2"
-  integrity sha512-6Se7dtQ6HDHscbm/RY+2RZOriQ+HbMo5QgyDqM9xvODkSsJFNMxh4bIDa+W/9K8ahy2xH5LHNUybDGkds1RusQ==
+eslint-config-ruppy-ts@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-ruppy-ts/-/eslint-config-ruppy-ts-1.5.0.tgz#62a8fad3b598d4304c555d6fcd1cc3b754ab3bb2"
+  integrity sha512-31klwX6WNQjnCGrN6BDgG1pUD6NDY9Xh/2Solm/msHC2VnSUofPfRW+OZq5xvU6dktDxj9djJCbswj3SKxRiPw==
   dependencies:
-    eslint-config-prettier "^6.12.0"
-    eslint-import-resolver-typescript "^2.3.0"
+    eslint-config-prettier "^8.1.0"
+    eslint-import-resolver-typescript "^2.4.0"
 
 eslint-import-resolver-node@^0.3.4:
   version "0.3.4"
@@ -1818,10 +1811,10 @@ eslint-import-resolver-node@^0.3.4:
     debug "^2.6.9"
     resolve "^1.13.1"
 
-eslint-import-resolver-typescript@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/eslint-import-resolver-typescript/-/eslint-import-resolver-typescript-2.3.0.tgz#0870988098bc6c6419c87705e6b42bee89425445"
-  integrity sha512-MHSXvmj5e0SGOOBhBbt7C+fWj1bJbtSYFAD85Xeg8nvUtuooTod2HQb8bfhE9f5QyyNxEfgzqOYFCvmdDIcCuw==
+eslint-import-resolver-typescript@^2.3.0, eslint-import-resolver-typescript@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/eslint-import-resolver-typescript/-/eslint-import-resolver-typescript-2.4.0.tgz#ec1e7063ebe807f0362a7320543aaed6fe1100e1"
+  integrity sha512-useJKURidCcldRLCNKWemr1fFQL1SzB3G4a0li6lFGvlc5xGe1hY343bvG07cbpCzPuM/lK19FIJB3XGFSkplA==
   dependencies:
     debug "^4.1.1"
     glob "^7.1.6"
@@ -2315,11 +2308,6 @@ get-package-type@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/get-package-type/-/get-package-type-0.1.0.tgz#8de2d803cff44df3bc6c456e6668b36c3926e11a"
   integrity sha512-pjzuKtY64GYfWizNAJ0fr9VqttZkNiK2iS430LtIHzjBEr6bX8Am2zm4sW4Ro5wjWW5cAlRL1qAMTcXbjNAO2Q==
-
-get-stdin@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/get-stdin/-/get-stdin-6.0.0.tgz#9e09bf712b360ab9225e812048f71fde9c89657b"
-  integrity sha512-jp4tHawyV7+fkkSKyvjuLZswblUtz+SQKzSWnBbii16BuZksJlU1wuBYXY75r+duh/llF1ur6oNwi+2ZzjKZ7g==
 
 get-stream@^4.0.0:
   version "4.1.0"
