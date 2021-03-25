@@ -1,5 +1,5 @@
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-# Workflows commands (::set-output): https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-output-parameter
+# https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+# Workflows commands (::set-output): # https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-output-parameter
 
 name: CI - Test Build ⚙🤖
 
@@ -14,19 +14,24 @@ jobs:
   test_on_node:
     name: Test Build ⚙🛠
 
+    env:
+      DB_URL_TEST: ${{ secrets.DB_URL_TEST }}
+      API__NEWS_TOKEN: ${{ secrets.API__NEWS_TOKEN }}
+      API__FOOTBALL_TOKEN: ${{ secrets.API__FOOTBALL_TOKEN }}
+
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node-version: [15.x, 12.x]
+        node-version: [15.x, 14.x]
 
     runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
 
       - name: Use Node.js ${{ matrix.node-version }} 📦
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2.1.5
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -35,16 +40,26 @@ jobs:
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
       - name: Cache node_modules 🧶
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: |
             ${{ steps.yarn-cache-dir-path.outputs.dir }}
             node_modules/.cache
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
+            ${{ runner.os }}-yarn
             ${{ runner.os }}-
-      - name: Install Dependencies 🎊
+      - name: Install Dependencies ✨
         run: yarn install --frozen-lockfile --check-files
 
-      - name: Test Build 🛠
+      - name: Run Linter 👨🏻‍💻
+        run: yarn lint
+
+      - name: Run Formatter 💅
+        run: yarn format
+
+      - name: Run Test 🛠
+        run: yarn test
+
+      - name: Run Build ⚙
         run: yarn build

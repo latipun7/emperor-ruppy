@@ -14,7 +14,7 @@ module.exports = {
   verbose: true,
   collectCoverage: true,
   setupFiles: ['dotenv/config'],
-  setupFilesAfterEnv: ['<rootDir>/tests/test.setup.ts'],
+  setupFilesAfterEnv: ['<rootDir>/test/test.setup.ts'],
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
     '!src/index.ts',

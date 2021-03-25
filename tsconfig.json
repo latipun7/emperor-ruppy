@@ -37,5 +37,5 @@
     "skipLibCheck": true
   },
   "exclude": ["node_modules", "dist"],
-  "include": ["src/**/*", "tests/**/*", "typings/**/*"]
+  "include": ["src/**/*", "test/**/*", "typings/**/*"]
 }
