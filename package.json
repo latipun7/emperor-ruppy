@@ -43,7 +43,7 @@
     "@types/node": "^14.14.36",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
-    "eslint": "^7.22.0",
+    "eslint": "^7.23.0",
     "eslint-config-ruppy-jest": "^1.0.0",
     "eslint-config-ruppy-node": "^1.5.1",
     "eslint-config-ruppy-ts": "^1.5.0",
