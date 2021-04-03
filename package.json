@@ -41,7 +41,7 @@
     "@types/common-tags": "^1.8.0",
     "@types/jest": "^26.0.22",
     "@types/node": "^14.14.36",
-    "@typescript-eslint/eslint-plugin": "^4.19.0",
+    "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.19.0",
     "eslint": "^7.23.0",
     "eslint-config-ruppy-jest": "^1.0.0",
