@@ -1,7 +1,7 @@
 # https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 # Workflows commands (::set-output): # https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-output-parameter
 
-name: CI - Test Build ⚙🤖
+name: CI/CD - Test Build and Deploy ⚙🐥🚀
 
 on:
   push:
@@ -40,7 +40,7 @@ jobs:
           path: |
             ${{ steps.yarn-cache-dir-path.outputs.dir }}
             node_modules/.cache
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies ✨
         run: yarn install --frozen-lockfile --check-files
@@ -61,15 +61,12 @@ jobs:
         uses: actions/cache@v2.1.5
         with:
           path: |
-            ./**/*
-            !./coverage
-            !./node_modules
-            !./src
-            !./test
-            !./typings
-            !./jest.config.js
-            !./.*
-          key: ${{ github.sha }}
+            ./dist
+            ./package.json
+            ./tsconfig-paths-bootstrap.js
+            ./tsconfig.json
+            ./yarn.lock
+          key: ${{ github.sha }}-${{ runner.os }}-${{ matrix.node-version }}
 
   deploy:
     name: Deploy to production ✨🚀
@@ -78,7 +75,12 @@ jobs:
 
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [14.x]
+
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Configure SSH ⚙
@@ -105,11 +107,16 @@ jobs:
       - name: Restore build cache ♻️
         uses: actions/cache@v2.1.5
         with:
-          path: ./**/*
-          key: ${{ github.sha }}
+          path: |
+            ./dist
+            ./package.json
+            ./tsconfig-paths-bootstrap.js
+            ./tsconfig.json
+            ./yarn.lock
+          key: ${{ github.sha }}-${{ runner.os }}-${{ matrix.node-version }}
 
       - name: Upload build state to host 🆙
-        run: rsync -rltgoDvzOh --delete . production:$SSH_PATH
+        run: rsync -rltDvzOh --delete . production:$SSH_PATH
 
       - name: Install dependencies in host ✨
         run: ssh production 'yarn --production --check-files'
@@ -125,7 +132,7 @@ jobs:
           DB_URI=$DB_URI
           PREFIX=
           EOF
+          rsync -rltDvzOh .env prduction:$SSH_PATH
 
       - name: Run Emperor Ruppy 🐥
-        if: ${{ always() }}
         run: ssh production 'if pm2 describe emperor-ruppy &>/dev/null; then pm2 restart emperor-ruppy; else yarn start; fi'
