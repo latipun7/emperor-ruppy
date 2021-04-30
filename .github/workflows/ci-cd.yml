@@ -70,3 +70,62 @@ jobs:
             !./jest.config.js
             !./.*
           key: ${{ github.sha }}
+
+  deploy:
+    name: Deploy to production ✨🚀
+
+    needs: test_and_build
+
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure SSH ⚙
+        env:
+          SSH_USER: ${{ secrets.PRODUCTION_SSH_USER }}
+          SSH_HOST: ${{ secrets.PRODUCTION_SSH_HOST }}
+          SSH_PORT: ${{ secrets.PRODUCTION_SSH_PORT }}
+          SSH_KEY: ${{ secrets.PRODUCTION_SSH_KEY }}
+          SSH_PATH: ${{ secrets.PRODUCTION_SSH_PATH }}
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/production.key
+          chmod 600 ~/.ssh/production.key
+          cat <<EOF >~/.ssh/config
+          Host production
+            HostName $SSH_HOST
+            User $SSH_USER
+            Port $SSH_PORT
+            IdentityFile ~/.ssh/production.key
+            BatchMode yes
+            StrictHostKeyChecking no
+          EOF
+
+      - name: Restore build cache ♻️
+        uses: actions/cache@v2.1.5
+        with:
+          path: ./**/*
+          key: ${{ github.sha }}
+
+      - name: Upload build state to host 🆙
+        run: rsync -rltgoDvzOh --delete . production:$SSH_PATH
+
+      - name: Install dependencies in host ✨
+        run: ssh production 'yarn --production --check-files'
+
+      - name: Setup host ENV 🌏
+        env:
+          DISCORD_TOKEN: ${{ secrets.PRODUCTION_DISCORD_TOKEN }}
+          DB_URI: ${{ secrets.PRODUCTION_DB_URI }}
+        run: |
+          cat <<EOF >./.env
+          NODE_ENV=production
+          DISCORD__BOT_TOKEN=$DISCORD_TOKEN
+          DB_URI=$DB_URI
+          PREFIX=
+          EOF
+
+      - name: Run Emperor Ruppy 🐥
+        if: ${{ always() }}
+        run: ssh production 'if pm2 describe emperor-ruppy &>/dev/null; then pm2 restart emperor-ruppy; else yarn start; fi'
