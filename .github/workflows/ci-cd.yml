@@ -89,7 +89,6 @@ jobs:
           SSH_HOST: ${{ secrets.PRODUCTION_SSH_HOST }}
           SSH_PORT: ${{ secrets.PRODUCTION_SSH_PORT }}
           SSH_KEY: ${{ secrets.PRODUCTION_SSH_KEY }}
-          SSH_PATH: ${{ secrets.PRODUCTION_SSH_PATH }}
         run: |
           mkdir -p ~/.ssh/
           echo "$SSH_KEY" > ~/.ssh/production.key
@@ -116,10 +115,10 @@ jobs:
           key: ${{ github.sha }}-${{ runner.os }}-${{ matrix.node-version }}
 
       - name: Upload build state to host 🆙
-        run: rsync -rltDvzOh --delete . production:$SSH_PATH
+        run: rsync -rltDvzOh ./ production:${{ secrets.PRODUCTION_SSH_PATH }}
 
       - name: Install dependencies in host ✨
-        run: ssh production 'yarn --production --check-files'
+        run: ssh production 'cd ${{ secrets.PRODUCTION_SSH_PATH }} && yarn --production --check-files'
 
       - name: Setup host ENV 🌏
         env:
@@ -132,7 +131,7 @@ jobs:
           DB_URI=$DB_URI
           PREFIX=
           EOF
-          rsync -rltDvzOh .env prduction:$SSH_PATH
+          rsync -rltDvzOh ./.env prduction:${{ secrets.PRODUCTION_SSH_PATH }}
 
       - name: Run Emperor Ruppy 🐥
-        run: ssh production 'if pm2 describe emperor-ruppy &>/dev/null; then pm2 restart emperor-ruppy; else yarn start; fi'
+        run: ssh production 'if pm2 describe emperor-ruppy &>/dev/null; then pm2 restart emperor-ruppy; else cd ${{ secrets.PRODUCTION_SSH_PATH }} && yarn start; fi'
