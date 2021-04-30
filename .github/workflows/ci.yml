@@ -11,18 +11,13 @@ on:
     branches: [main]
 
 jobs:
-  test_on_node:
+  test_and_build:
     name: Test Build ⚙🛠
-
-    env:
-      DB_URL_TEST: ${{ secrets.DB_URL_TEST }}
-      API__NEWS_TOKEN: ${{ secrets.API__NEWS_TOKEN }}
-      API__FOOTBALL_TOKEN: ${{ secrets.API__FOOTBALL_TOKEN }}
 
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node-version: [15.x, 14.x]
+        node-version: [16.x, 14.x]
 
     runs-on: ${{ matrix.os }}
 
@@ -46,20 +41,32 @@ jobs:
             ${{ steps.yarn-cache-dir-path.outputs.dir }}
             node_modules/.cache
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn
-            ${{ runner.os }}-
-      - name: Install Dependencies ✨
+
+      - name: Install dependencies ✨
         run: yarn install --frozen-lockfile --check-files
 
-      - name: Run Linter 👨🏻‍💻
+      - name: Run linter 👨🏻‍💻
         run: yarn lint
 
-      - name: Run Formatter 💅
+      - name: Run formatter 💅
         run: yarn format
 
-      - name: Run Test 🛠
+      - name: Run test 🛠
         run: yarn test
 
-      - name: Run Build ⚙
+      - name: Run build ⚙
         run: yarn build
+
+      - name: Cache build ready to deploy 🚀
+        uses: actions/cache@2.1.5
+        with:
+          path: |
+            ./**/*
+            !./coverage
+            !./node_modules
+            !./src
+            !./test
+            !./typings
+            !./jest.config.js
+            !./.*
+          key: ${{ github.sha }}
