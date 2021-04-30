@@ -39,7 +39,7 @@ jobs:
           EOF
 
       - name: Restore build cache ♻️
-        uses: actions/cache@2.1.5
+        uses: actions/cache@v2.1.5
         with:
           path: ./**/*
           key: ${{ github.sha }}
@@ -49,6 +49,18 @@ jobs:
 
       - name: Install dependencies in host ✨
         run: ssh production 'yarn --production --check-files'
+
+      - name: Setup host ENV 🌏
+        env:
+          DISCORD_TOKEN: ${{ secrets.PRODUCTION_DISCORD_TOKEN }}
+          DB_URI: ${{ secrets.PRODUCTION_DB_URI }}
+        run: |
+          cat <<EOF >./.env
+          NODE_ENV=production
+          DISCORD__BOT_TOKEN=$DISCORD_TOKEN
+          DB_URI=$DB_URI
+          PREFIX=
+          EOF
 
       - name: Run Emperor Ruppy 🐥
         if: ${{ always() }}

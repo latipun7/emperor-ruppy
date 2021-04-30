@@ -58,7 +58,7 @@ jobs:
         run: yarn build
 
       - name: Cache build ready to deploy 🚀
-        uses: actions/cache@2.1.5
+        uses: actions/cache@v2.1.5
         with:
           path: |
             ./**/*
