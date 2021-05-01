@@ -1,7 +1,7 @@
 # https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 # Workflows commands (::set-output): # https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-output-parameter
 
-name: CI/CD - Test Build and Deploy ⚙🐥🚀
+name: Test Build and Deploy ⚙🐥🚀
 
 on:
   push:
@@ -114,12 +114,6 @@ jobs:
             ./yarn.lock
           key: ${{ github.sha }}-${{ runner.os }}-${{ matrix.node-version }}
 
-      - name: Upload build state to host 🆙
-        run: rsync -rltDvzOh ./ production:${{ secrets.PRODUCTION_SSH_PATH }}
-
-      - name: Install dependencies in host ✨
-        run: ssh production 'cd ${{ secrets.PRODUCTION_SSH_PATH }} && yarn --production --check-files'
-
       - name: Setup host ENV 🌏
         env:
           DISCORD_TOKEN: ${{ secrets.PRODUCTION_DISCORD_TOKEN }}
@@ -131,7 +125,25 @@ jobs:
           DB_URI=$DB_URI
           PREFIX=
           EOF
-          rsync -rltDvzOh ./.env prduction:${{ secrets.PRODUCTION_SSH_PATH }}
+
+      - name: Upload build state to host 🆙
+        run: rsync -rltDvzOh --delete ./ production:${{ secrets.PRODUCTION_SSH_PATH }}
+
+      - name: Install dependencies in host ✨
+        run: |
+          ssh production <<END
+          source ~/.zshrc &>/dev/null
+          cd ${{ secrets.PRODUCTION_SSH_PATH }}
+          yarn --production --check-files'
+          END
 
       - name: Run Emperor Ruppy 🐥
-        run: ssh production 'if pm2 describe emperor-ruppy &>/dev/null; then pm2 restart emperor-ruppy; else cd ${{ secrets.PRODUCTION_SSH_PATH }} && yarn start; fi'
+        run: |
+          ssh production <<END
+          source ~/.zshrc &>/dev/null
+          if pm2 describe emperor-ruppy &>/dev/null; then
+            pm2 restart emperor-ruppy;
+          else
+            cd ${{ secrets.PRODUCTION_SSH_PATH }} && yarn start;
+          fi
+          END
