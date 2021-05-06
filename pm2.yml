@@ -1,0 +1,7 @@
+apps:
+  - name: emperor-ruppy
+    script: ./dist/src
+    interpreter: fnm
+    interpreter_args: exec --using default node -r ./tsconfig-paths-bootstrap.js -r dotenv/config
+    env:
+      NODE_ENV: production

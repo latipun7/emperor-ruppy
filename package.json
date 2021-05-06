@@ -16,7 +16,7 @@
   "scripts": {
     "dev": "ts-node --files -r tsconfig-paths/register -r dotenv/config ./src/index.ts",
     "build": "tsc",
-    "start": "pm2 --name emperor-ruppy --node-args \"-r ./tsconfig-paths-bootstrap.js -r dotenv/config\" start dist/src",
+    "start": "pm2 start ./pm2.yml",
     "lint": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx .",
     "format": "prettier --write .",
     "test": "rimraf dist && jest",
