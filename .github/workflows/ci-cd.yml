@@ -63,6 +63,7 @@ jobs:
           path: |
             ./dist
             ./package.json
+            ./pm2.yml
             ./tsconfig-paths-bootstrap.js
             ./tsconfig.json
             ./yarn.lock
@@ -109,6 +110,7 @@ jobs:
           path: |
             ./dist
             ./package.json
+            ./pm2.yml
             ./tsconfig-paths-bootstrap.js
             ./tsconfig.json
             ./yarn.lock
