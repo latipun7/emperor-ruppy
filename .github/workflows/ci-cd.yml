@@ -35,7 +35,7 @@ jobs:
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
       - name: Cache node_modules 🧶
-        uses: actions/cache@v2.1.5
+        uses: actions/cache@v2.1.6
         with:
           path: |
             ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -58,7 +58,7 @@ jobs:
         run: yarn build
 
       - name: Cache build ready to deploy 🚀
-        uses: actions/cache@v2.1.5
+        uses: actions/cache@v2.1.6
         with:
           path: |
             ./dist
@@ -105,7 +105,7 @@ jobs:
           EOF
 
       - name: Restore build cache ♻️
-        uses: actions/cache@v2.1.5
+        uses: actions/cache@v2.1.6
         with:
           path: |
             ./dist
