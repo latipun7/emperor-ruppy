@@ -1818,10 +1818,12 @@ eslint-config-ruppy-base@^1.6.0:
     confusing-browser-globals "^1.0.10"
     eslint-config-prettier "^8.1.0"
 
-eslint-config-ruppy-jest@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-ruppy-jest/-/eslint-config-ruppy-jest-1.0.0.tgz#71aaba4de73312333e89f079ed3e4319bffc1222"
-  integrity sha512-VgrXH9N8nxjKEohvfBSf6YiL8bSXkp+2ymTq6G+cOwM8qceHzXW1xCQHCgLYCpypEtzdIev4FYoOJ8SaAULIww==
+eslint-config-ruppy-jest@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-ruppy-jest/-/eslint-config-ruppy-jest-2.0.0.tgz#cc3d17f4cef6f635b7e3ae1380e90ab88ff11828"
+  integrity sha512-cVw1n+tKSQMiPuH2QxUUW94s9HEsgH7T4T1ItdvZPGKiaj2BML9BP1AqyXFm25toAw4FfRGonl9eRJ+r6a1lLQ==
+  dependencies:
+    eslint-plugin-jest "^24.4.0"
 
 eslint-config-ruppy-node@^1.5.1:
   version "1.5.1"
@@ -1892,10 +1894,10 @@ eslint-plugin-import@^2.22.1:
     resolve "^1.17.0"
     tsconfig-paths "^3.9.0"
 
-eslint-plugin-jest@^24.3.6:
-  version "24.3.6"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-24.3.6.tgz#5f0ca019183c3188c5ad3af8e80b41de6c8e9173"
-  integrity sha512-WOVH4TIaBLIeCX576rLcOgjNXqP+jNlCiEmRgFTfQtJ52DpwnIQKAVGlGPAN7CZ33bW6eNfHD6s8ZbEUTQubJg==
+eslint-plugin-jest@^24.3.6, eslint-plugin-jest@^24.4.0:
+  version "24.4.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-24.4.0.tgz#fa4b614dbd46a98b652d830377971f097bda9262"
+  integrity sha512-8qnt/hgtZ94E9dA6viqfViKBfkJwFHXgJmTWlMGDgunw1XJEGqm3eiPjDsTanM3/u/3Az82nyQM9GX7PM/QGmg==
   dependencies:
     "@typescript-eslint/experimental-utils" "^4.0.1"
 
