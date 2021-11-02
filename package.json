@@ -27,7 +27,7 @@
     "axios": "^0.21.1",
     "common-tags": "^1.8.0",
     "discord-akairo": "^8.1.0",
-    "discord.js": "^12.5.3",
+    "discord.js": "^13.3.1",
     "dotenv": "^9.0.2",
     "emoji-regex": "^9.2.2",
     "pg": "^8.6.0",
