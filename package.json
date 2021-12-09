@@ -2,13 +2,13 @@
   "name": "emperor-ruppy",
   "version": "1.0.0-alpha.0",
   "description": "All rounder emperor with focus on developer 🐣",
-  "author": "Latipun <latifsulisyo.me@gmail.com> (https://latipun7.github.io)",
+  "author": "Latipun <latifsulisyo.me@gmail.com> (https://latipun.dev)",
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": ">=12.8.3",
-    "yarn": ">=1.19.0"
+    "node": ">=16.13.0"
   },
+  "packageManager": "yarn@3.1.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/Ruppyio/emperor-ruppy.git"
