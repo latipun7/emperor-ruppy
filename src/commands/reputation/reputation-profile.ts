@@ -55,18 +55,17 @@ export default class ReputationProfileCommand extends RuppyCommand {
         .cache(`${gid}_${member?.id || message.member.id}_guild_member_rep`)
         .getRawOne();
 
-      const channelRawData: ChannelRawData = await Reputation.createQueryBuilder(
-        'rep'
-      )
-        .select(['rep.channelID AS "repChannelID"', 'COUNT(*)'])
-        .where('rep.guildID = :id AND rep.userID = :user', {
-          id: gid,
-          user: member?.id || message.member.id,
-        })
-        .groupBy('rep.channelID')
-        .orderBy('COUNT(*)', 'DESC')
-        .cache(`${gid}_${member?.id || message.member.id}_channel_member_rep`)
-        .getRawMany();
+      const channelRawData: ChannelRawData =
+        await Reputation.createQueryBuilder('rep')
+          .select(['rep.channelID AS "repChannelID"', 'COUNT(*)'])
+          .where('rep.guildID = :id AND rep.userID = :user', {
+            id: gid,
+            user: member?.id || message.member.id,
+          })
+          .groupBy('rep.channelID')
+          .orderBy('COUNT(*)', 'DESC')
+          .cache(`${gid}_${member?.id || message.member.id}_channel_member_rep`)
+          .getRawMany();
 
       const userData = {
         id: userRawData?.repUserID,

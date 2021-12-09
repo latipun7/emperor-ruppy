@@ -1,3 +1,5 @@
+'use strict';
+
 const { pathsToModuleNameMapper } = require('ts-jest/utils');
 const { defaults: tsJest } = require('ts-jest/presets');
 

@@ -72,11 +72,8 @@ export default class EmbedCommand extends RuppyCommand {
     { embedOptionsLink, textChannel, msgID }: CmdArgs
   ) {
     try {
-      const {
-        data: receivedEmbed,
-      }: AxiosResponse<MessageEmbedOptions> = await Axios.get(
-        embedOptionsLink.toString()
-      );
+      const { data: receivedEmbed }: AxiosResponse<MessageEmbedOptions> =
+        await Axios.get(embedOptionsLink.toString());
 
       if (isEmptyObject({ ...receivedEmbed })) {
         return await message.util?.send(

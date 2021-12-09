@@ -17,11 +17,11 @@
     "dev": "ts-node --files -r tsconfig-paths/register -r dotenv/config ./src/index.ts",
     "build": "tsc",
     "start": "pm2 start ./pm2.yml",
-    "lint": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx .",
-    "format": "prettier --write .",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
+    "format": "prettier --check .",
     "test": "rimraf dist && jest",
     "test:all": "rimraf dist && yarn lint && yarn format && yarn test",
-    "prepare": "husky install"
+    "postinstall": "husky install"
   },
   "dependencies": {
     "axios": "^0.24.0",
@@ -38,28 +38,22 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
+    "@latipun7/eslint-config": "^1.0.4",
     "@types/common-tags": "^1.8.1",
     "@types/jest": "^26.0.24",
     "@types/node": "^16.11.7",
-    "@typescript-eslint/eslint-plugin": "^4.22.1",
-    "@typescript-eslint/parser": "^5.3.1",
-    "eslint": "^7.29.0",
-    "eslint-config-ruppy-jest": "^1.0.0",
-    "eslint-config-ruppy-node": "^1.5.1",
-    "eslint-config-ruppy-ts": "^1.5.0",
-    "eslint-import-resolver-typescript": "^2.5.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jest": "^24.3.6",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.4.0",
+    "eslint": "^8.4.1",
     "husky": "^7.0.4",
     "jest": "^26.6.3",
     "lint-staged": "^11.2.6",
-    "prettier": "^2.4.1",
+    "prettier": "^2.5.1",
     "rimraf": "^3.0.2",
     "ts-jest": "^26.5.6",
     "ts-node": "^10.4.0",
     "typescript": "^4.4.4"
+  },
+  "eslintConfig": {
+    "extends": "@latipun7"
   },
   "lint-staged": {
     "*.{json,yml,yaml,md,mdx,html,css,sass,scss,graphql}": "prettier --write",
