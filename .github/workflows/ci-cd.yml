@@ -1,64 +1,57 @@
-# https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-# Workflows commands (::set-output): # https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-output-parameter
+# GitHub Actions References:
+# https://docs.github.com/en/actions
 
-name: Test Build and Deploy ⚙🐥🚀
+name: ⚙🚀
 
 on:
   push:
     branches: [main]
 
   pull_request:
-    branches: [main]
+    types: [opened, synchronize]
 
 jobs:
-  test_and_build:
-    name: Test Build ⚙🛠
+  test_build:
+    name: ⚛ Test and Build ⚙
 
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node-version: [16.x, 14.x]
+        node: [17.x, "lts/*"]
 
     runs-on: ${{ matrix.os }}
 
     steps:
-      - name: Checkout 🛎️
+      - name: 🛑 Cancel Previous Running Workflows
+        uses: styfle/cancel-workflow-action@0.9.1
+
+      - name: 🛎️ Checkout
         uses: actions/checkout@v2.4.0
 
-      - name: Use Node.js ${{ matrix.node-version }} 📦
-        uses: actions/setup-node@v2.4.1
+      - name: 📦 Use Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v2.5.0
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ matrix.node }}
+          cache: yarn
+          cache-dependency-path: "**/yarn.lock"
 
-      - name: Get yarn cache directory path 🐈
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: ✨ Install Dependencies
+        run: yarn --immutable --check-cache
 
-      - name: Cache node_modules 🧶
-        uses: actions/cache@v2.1.6
-        with:
-          path: |
-            ${{ steps.yarn-cache-dir-path.outputs.dir }}
-            node_modules/.cache
-          key: ${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('**/yarn.lock') }}
-
-      - name: Install dependencies ✨
-        run: yarn install --frozen-lockfile --check-files
-
-      - name: Run linter 👨🏻‍💻
+      - name: 👓 Run Linter
         run: yarn lint
 
-      - name: Run formatter 💅
+      - name: 💅 Run Formatter
         run: yarn format
 
-      - name: Run test 🛠
+      - name: 🧪 Run Tests
         run: yarn test
 
-      - name: Run build ⚙
+      - name: 🛠 Run Build
         run: yarn build
 
-      - name: Cache build ready to deploy 🚀
-        uses: actions/cache@v2.1.6
+      - name: ♻ Cache dist Directory for Publish
+        uses: actions/cache@v2.1.7
         with:
           path: |
             ./dist
@@ -67,24 +60,25 @@ jobs:
             ./tsconfig-paths-bootstrap.js
             ./tsconfig.json
             ./yarn.lock
-          key: ${{ github.sha }}-${{ runner.os }}-${{ matrix.node-version }}
+          key: ${{ github.sha }}-${{ runner.os }}-${{ matrix.node }}
 
   deploy:
-    name: Deploy to production ✨🚀
-
-    needs: test_and_build
-
+    name: 🚀 Deploy to Production ✨
+    needs: test_build
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node-version: [14.x]
+        node: ["lts/*"]
 
     runs-on: ${{ matrix.os }}
 
     steps:
-      - name: Configure SSH ⚙
+      - name: 🛑 Cancel Previous Running Workflows
+        uses: styfle/cancel-workflow-action@0.9.1
+
+      - name: ⚙ Configure SSH
         env:
           SSH_USER: ${{ secrets.PRODUCTION_SSH_USER }}
           SSH_HOST: ${{ secrets.PRODUCTION_SSH_HOST }}
@@ -104,8 +98,9 @@ jobs:
             StrictHostKeyChecking no
           EOF
 
-      - name: Restore build cache ♻️
-        uses: actions/cache@v2.1.6
+      - name: ♻ Restore dist Directory for Publish
+        id: restore-dist
+        uses: actions/cache@v2.1.7
         with:
           path: |
             ./dist
@@ -114,9 +109,9 @@ jobs:
             ./tsconfig-paths-bootstrap.js
             ./tsconfig.json
             ./yarn.lock
-          key: ${{ github.sha }}-${{ runner.os }}-${{ matrix.node-version }}
+          key: ${{ github.sha }}-${{ runner.os }}-${{ matrix.node }}
 
-      - name: Setup remote host ENV 🌏
+      - name: 🌏 Setup Remote Host ENV
         env:
           DISCORD_TOKEN: ${{ secrets.PRODUCTION_DISCORD_TOKEN }}
           DB_URI: ${{ secrets.PRODUCTION_DB_URI }}
@@ -128,11 +123,11 @@ jobs:
           PREFIX=
           EOF
 
-      - name: Upload build state to remote host 🆙
+      - name: 🆙 Upload Build State to Remote Host
         run: rsync -rltDvzOh --delete ./ production:${{ secrets.PRODUCTION_SSH_PATH }}
 
-      - name: Install dependencies in remote host ✨
+      - name: ✨ Install Dependencies in Remote Host
         run: ssh production 'cd ${{ secrets.PRODUCTION_SSH_PATH }} && yarn --production --check-files'
 
-      - name: Run Emperor Ruppy 🐥
+      - name: 🐥 Run Emperor Ruppy
         run: ssh production 'if pm2 describe emperor-ruppy; then pm2 restart emperor-ruppy; else cd ${{ secrets.PRODUCTION_SSH_PATH }} && yarn start; fi'
