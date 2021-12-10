@@ -41,7 +41,7 @@ export default class BotInfoCommand extends RuppyCommand {
       .addField('✨ Version', `${packageJSON.version}`, true)
       .addField(
         '👨‍💻 Source Code',
-        "[Emperor Ruppy's GitHub](https://github.com/Ruppyio/emperor-ruppy)",
+        "[Emperor Ruppy's GitHub](https://github.com/latipun7/emperor-ruppy)",
         true
       )
       .setThumbnail(this.client.user?.displayAvatarURL({ dynamic: true }) ?? '')

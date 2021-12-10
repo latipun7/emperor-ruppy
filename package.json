@@ -1,6 +1,6 @@
 {
   "name": "emperor-ruppy",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-beta.1",
   "description": "All rounder emperor with focus on developer 🐣",
   "author": "Latipun <latifsulisyo.me@gmail.com> (https://latipun.dev)",
   "license": "MIT",
@@ -11,7 +11,7 @@
   "packageManager": "yarn@3.1.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Ruppyio/emperor-ruppy.git"
+    "url": "https://github.com/latipun7/emperor-ruppy.git"
   },
   "scripts": {
     "dev": "ts-node --files -r tsconfig-paths/register -r dotenv/config ./src/index.ts",
@@ -20,7 +20,6 @@
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
     "format": "prettier --check .",
     "test": "rimraf dist && jest",
-    "test:all": "rimraf dist && yarn lint && yarn format && yarn test",
     "postinstall": "husky install"
   },
   "dependencies": {
@@ -57,10 +56,10 @@
     "extends": "@latipun7"
   },
   "lint-staged": {
-    "*.{json,yml,yaml,md,mdx,html,css,sass,scss,graphql}": "prettier --write",
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix --cache",
+    "**/*.{js,cjs,mjs,jsx,ts,tsx}": [
+      "eslint --fix",
       "prettier --write"
-    ]
+    ],
+    "**/*": "prettier --write --ignore-unknown"
   }
 }

@@ -156,7 +156,7 @@ export default class HelpCommand extends RuppyCommand {
               const aliases = RuppyCommand.getAliases(cmd);
               const mapAlias = aliases?.map((alias) => `${alias}`).join(', ');
 
-              return `[\`${cmd.aliases[0]}\`](https://ruppy.io "${
+              return `[\`${cmd.aliases[0]}\`](https://latipun.dev "${
                 cmd.description.content
               }${mapAlias ? `\n\nAlias: ${mapAlias}` : ''}")`;
             })
