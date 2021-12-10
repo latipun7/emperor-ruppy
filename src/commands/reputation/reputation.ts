@@ -1,8 +1,7 @@
-import { Flag } from 'discord-akairo';
 import { stripIndent } from 'common-tags';
-import { CmdCategories, RuppyCommand } from 'structures/RuppyCommand';
+import { Flag, type ArgumentOptions } from 'discord-akairo';
 import type { Message } from 'discord.js';
-import type { ArgumentOptions } from 'discord-akairo';
+import { CmdCategories, RuppyCommand } from 'structures/RuppyCommand';
 
 export default class ReputationCommand extends RuppyCommand {
   public constructor() {

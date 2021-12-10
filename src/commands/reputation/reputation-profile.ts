@@ -1,8 +1,7 @@
-import { MessageEmbed } from 'discord.js';
 import { stripIndent } from 'common-tags';
+import { MessageEmbed, type GuildMember, type Message } from 'discord.js';
 import Reputation from 'entities/Reputation';
 import { CmdCategories, RuppyCommand } from 'structures/RuppyCommand';
-import type { Message, GuildMember } from 'discord.js';
 
 interface CmdArgs {
   member?: GuildMember;
@@ -33,7 +32,7 @@ export default class ReputationProfileCommand extends RuppyCommand {
     });
   }
 
-  public async exec(message: Message, { member }: CmdArgs) {
+  public override async exec(message: Message, { member }: CmdArgs) {
     if (!message.guild || !message.member)
       return message.util?.send('guild / server only');
 

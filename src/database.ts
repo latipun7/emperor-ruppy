@@ -1,9 +1,9 @@
-import 'reflect-metadata';
-import { createConnection } from 'typeorm';
 import Guild from 'entities/Guild';
+import ReactionRole from 'entities/ReactionRole';
 import Reputation from 'entities/Reputation';
 import User from 'entities/User';
-import ReactionRole from 'entities/ReactionRole';
+import 'reflect-metadata';
+import { createConnection } from 'typeorm';
 import { Infra } from './configs';
 
 // const MAX_INTEGER = 2147483647;

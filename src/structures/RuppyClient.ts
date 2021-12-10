@@ -1,15 +1,14 @@
+import { stripIndent } from 'common-tags';
 import {
   AkairoClient,
   CommandHandler,
   InhibitorHandler,
   ListenerHandler,
 } from 'discord-akairo';
-import { Intents } from 'discord.js';
-import { resolve } from 'path';
-import { stripIndent } from 'common-tags';
+import { Intents, type Message } from 'discord.js';
 import Guild from 'entities/Guild';
+import { resolve } from 'path';
 import { RuppyPresence } from 'src/configs';
-import type { Message } from 'discord.js';
 import type { ClientConfig } from 'typings/ruppy';
 
 export default class RuppyClient extends AkairoClient {

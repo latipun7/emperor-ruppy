@@ -1,10 +1,10 @@
 /* eslint-disable no-await-in-loop */
 // import { getConnection } from 'typeorm';
-import User from 'entities/User';
+import type { Message, User as DiscordUser } from 'discord.js';
 import Guild from 'entities/Guild';
 import Reputation from 'entities/Reputation';
+import User from 'entities/User';
 import RuppyListener from 'structures/RuppyListener';
-import type { Message, User as DiscordUser } from 'discord.js';
 
 export default class ReputationMessageListener extends RuppyListener {
   public constructor() {
@@ -14,27 +14,22 @@ export default class ReputationMessageListener extends RuppyListener {
     });
   }
 
-  async getOrMakeUser(mentionUser: DiscordUser, msgGuildID?: string) {
-    try {
-      let user = await User.findOne(mentionUser.id);
+  static async getOrMakeUser(mentionUser: DiscordUser, msgGuildID: string) {
+    let user = await User.findOne(mentionUser.id);
 
-      if (!user) {
-        const guild = await Guild.create({ guildID: msgGuildID }).save();
+    if (!user) {
+      const guild = await Guild.create({ guildID: msgGuildID }).save();
 
-        user = await User.create({
-          userID: mentionUser.id,
-          guilds: [guild],
-        }).save();
-      }
-
-      return user;
-    } catch (error) {
-      this.logger.error('ReputationMessage error on get User:', error);
-      return undefined;
+      user = await User.create({
+        userID: mentionUser.id,
+        guilds: [guild],
+      }).save();
     }
+
+    return user;
   }
 
-  public async exec(message: Message) {
+  public override async exec(message: Message) {
     // TODO: add cooldown for thanking same user, cancel thanks, etc
     // PARTIAL_GIVE = '⏳';
     // NO_GIVE = '❌';
@@ -53,7 +48,10 @@ export default class ReputationMessageListener extends RuppyListener {
 
       for (const mentionUser of mentionUsers) {
         if (mentionUser.id !== message.author.id && !mentionUser.bot) {
-          const user = await this.getOrMakeUser(mentionUser, guildID);
+          const user = await ReputationMessageListener.getOrMakeUser(
+            mentionUser,
+            guildID
+          );
 
           // await getConnection().queryResultCache?.remove([
           //   `${guildID}_guild_rep`,

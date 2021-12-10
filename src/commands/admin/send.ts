@@ -1,6 +1,6 @@
 import { oneLine, stripIndent } from 'common-tags';
-import { CmdCategories, RuppyCommand } from 'structures/RuppyCommand';
 import type { Message, NewsChannel, TextChannel } from 'discord.js';
+import { CmdCategories, RuppyCommand } from 'structures/RuppyCommand';
 
 interface CmdArgs {
   textChannel: NewsChannel | TextChannel;
@@ -54,7 +54,10 @@ export default class SendCommand extends RuppyCommand {
     });
   }
 
-  public async exec(message: Message, { textChannel, msgID, msgs }: CmdArgs) {
+  public override async exec(
+    message: Message,
+    { textChannel, msgID, msgs }: CmdArgs
+  ) {
     try {
       if (msgID) {
         await msgID.edit(msgs);

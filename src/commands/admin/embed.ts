@@ -1,15 +1,14 @@
-import Axios from 'axios';
-import { MessageEmbed } from 'discord.js';
+import Axios, { type AxiosResponse } from 'axios';
 import { oneLine, stripIndent } from 'common-tags';
+import {
+  MessageEmbed,
+  type Message,
+  type MessageEmbedOptions,
+  type NewsChannel,
+  type TextChannel,
+} from 'discord.js';
 import { isEmptyObject } from 'lib/utils';
 import { CmdCategories, RuppyCommand } from 'structures/RuppyCommand';
-import type {
-  Message,
-  MessageEmbedOptions,
-  NewsChannel,
-  TextChannel,
-} from 'discord.js';
-import type { AxiosResponse } from 'axios';
 import type { URL } from 'url';
 
 interface CmdArgs {
@@ -67,7 +66,7 @@ export default class EmbedCommand extends RuppyCommand {
     });
   }
 
-  public async exec(
+  public override async exec(
     message: Message,
     { embedOptionsLink, textChannel, msgID }: CmdArgs
   ) {

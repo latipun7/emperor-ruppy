@@ -1,6 +1,6 @@
 import { stripIndent } from 'common-tags';
-import { createLogger, format, transports, addColors } from 'winston';
 import { isEmptyObject } from 'lib/utils';
+import { addColors, createLogger, format, transports } from 'winston';
 
 // Configure the Winston logger.
 // For the complete documentation see https://github.com/winstonjs/winston

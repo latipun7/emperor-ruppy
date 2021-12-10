@@ -1,8 +1,12 @@
-import { Command } from 'discord-akairo';
-import logger from 'lib/logger';
-import { Emojis } from 'src/constants';
+import {
+  Command,
+  type CommandOptions,
+  type PrefixSupplier,
+} from 'discord-akairo';
 import type { Message } from 'discord.js';
-import type { CommandOptions, PrefixSupplier } from 'discord-akairo';
+import logger from 'lib/logger';
+import { Bot } from 'src/configs';
+import { Emojis } from 'src/constants';
 import type RuppyClient from './RuppyClient';
 
 export const CmdCategories = {
@@ -25,13 +29,15 @@ interface RuppyCommandOptions extends CommandOptions {
 export class RuppyCommand extends Command {
   public logger;
 
-  public description!: {
+  public override aliases!: [string, ...string[]];
+
+  public override description!: {
     content: string;
     usage?: string;
     examples?: string[];
   };
 
-  public client!: RuppyClient;
+  public override client!: RuppyClient;
 
   public constructor(id: string, options: RuppyCommandOptions) {
     const opt = Object.create(options) as RuppyCommandOptions;
@@ -54,10 +60,10 @@ export class RuppyCommand extends Command {
   }
 
   public async getPrefix(message: Message): Promise<string> {
-    let prefixes = await (this.handler.prefix as PrefixSupplier)(message);
+    const prefixes = await (this.handler.prefix as PrefixSupplier)(message);
 
     if (Array.isArray(prefixes)) {
-      [prefixes] = prefixes;
+      return prefixes.shift() || Bot.defaultPrefix;
     }
 
     return prefixes;

@@ -1,6 +1,6 @@
+import type { Message } from 'discord.js';
 import ms from 'pretty-ms';
 import { CmdCategories, RuppyCommand } from 'structures/RuppyCommand';
-import type { Message } from 'discord.js';
 
 export default class PingCommand extends RuppyCommand {
   public constructor() {
@@ -12,7 +12,7 @@ export default class PingCommand extends RuppyCommand {
     });
   }
 
-  public async exec(message: Message) {
+  public override async exec(message: Message) {
     const response = await message.util?.send('⏳ Pinging…');
 
     if (response) {

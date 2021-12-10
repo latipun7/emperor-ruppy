@@ -1,8 +1,7 @@
-import { MessageEmbed } from 'discord.js';
 import { stripIndent } from 'common-tags';
+import { MessageEmbed, type Message, type TextChannel } from 'discord.js';
 import Reputation from 'entities/Reputation';
 import { CmdCategories, RuppyCommand } from 'structures/RuppyCommand';
-import type { Message, TextChannel } from 'discord.js';
 
 interface CmdArgs {
   channel?: TextChannel;
@@ -33,7 +32,7 @@ export default class ReputationLeaderboardCommand extends RuppyCommand {
     });
   }
 
-  public async exec(message: Message, { channel }: CmdArgs) {
+  public override async exec(message: Message, { channel }: CmdArgs) {
     if (!message.guild) return message.util?.send('guild / server only');
 
     try {

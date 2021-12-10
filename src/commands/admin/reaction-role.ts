@@ -1,10 +1,10 @@
-import { Argument } from 'discord-akairo';
-import emojiRegex from 'emoji-regex/es2015';
 import { oneLine, stripIndent } from 'common-tags';
-import { CmdCategories, RuppyCommand } from 'structures/RuppyCommand';
+import { Argument } from 'discord-akairo';
+import type { EmojiResolvable, Message, Role } from 'discord.js';
+import emojiRegex from 'emoji-regex/es2015';
 import Guild from 'entities/Guild';
 import ReactionRole from 'entities/ReactionRole';
-import type { EmojiResolvable, Message, Role } from 'discord.js';
+import { CmdCategories, RuppyCommand } from 'structures/RuppyCommand';
 
 interface CmdArgs {
   message: Message;
@@ -63,7 +63,7 @@ export default class ReactionRoleCommand extends RuppyCommand {
     });
   }
 
-  public async exec(msg: Message, { message, emoji, role }: CmdArgs) {
+  public override async exec(msg: Message, { message, emoji, role }: CmdArgs) {
     try {
       await message.react(emoji);
 

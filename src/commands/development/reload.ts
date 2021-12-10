@@ -1,10 +1,15 @@
-import { Argument, Command, Inhibitor, Listener } from 'discord-akairo';
 import { oneLine, stripIndent } from 'common-tags';
+import {
+  Argument,
+  Command,
+  Inhibitor,
+  Listener,
+  type AkairoModule,
+} from 'discord-akairo';
+import type { Message } from 'discord.js';
+import { startTimer } from 'lib/utils';
 import ms from 'pretty-ms';
 import { CmdCategories, RuppyCommand } from 'structures/RuppyCommand';
-import { startTimer } from 'lib/utils';
-import type { Message } from 'discord.js';
-import type { AkairoModule } from 'discord-akairo';
 
 interface CmdArgs {
   module: AkairoModule | RuppyCommand | Listener | Inhibitor;
@@ -45,7 +50,7 @@ export default class ReloadCommand extends RuppyCommand {
     });
   }
 
-  public async exec(message: Message, args: CmdArgs) {
+  public override async exec(message: Message, args: CmdArgs) {
     const endTimer = startTimer();
 
     let reloaded;

@@ -1,9 +1,12 @@
-import { MessageEmbed } from 'discord.js';
 import { stripIndents } from 'common-tags';
-import { CmdCategories, RuppyCommand } from 'structures/RuppyCommand';
-import { capitalizeFirstCharacter } from 'lib/utils';
-import type { Message, PermissionResolvable } from 'discord.js';
 import type { Category } from 'discord-akairo';
+import {
+  MessageEmbed,
+  type Message,
+  type PermissionResolvable,
+} from 'discord.js';
+import { capitalizeFirstCharacter } from 'lib/utils';
+import { CmdCategories, RuppyCommand } from 'structures/RuppyCommand';
 
 interface CmdArgs {
   command?: RuppyCommand;
@@ -34,7 +37,7 @@ export default class HelpCommand extends RuppyCommand {
     });
   }
 
-  public async exec(message: Message, { command }: CmdArgs) {
+  public override async exec(message: Message, { command }: CmdArgs) {
     const embed = new MessageEmbed().setColor('#41B0FD');
     const prefix = await this.getPrefix(message);
 

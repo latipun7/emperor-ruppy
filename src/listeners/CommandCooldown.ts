@@ -11,7 +11,11 @@ export default class CommandCooldownListener extends RuppyListener {
     });
   }
 
-  public async exec(message: Message, _: RuppyCommand, remaining: number) {
+  public override async exec(
+    message: Message,
+    _: RuppyCommand,
+    remaining: number
+  ) {
     try {
       await message.react('⌚');
 

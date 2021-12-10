@@ -1,9 +1,8 @@
-import { MessageEmbed } from 'discord.js';
 import { stripIndent } from 'common-tags';
+import { MessageEmbed, type Message } from 'discord.js';
+import packageJSON from 'package.json';
 import prettyMilliseconds from 'pretty-ms';
 import { CmdCategories, RuppyCommand } from 'structures/RuppyCommand';
-import packageJSON from 'package.json';
-import type { Message } from 'discord.js';
 
 export default class BotInfoCommand extends RuppyCommand {
   public constructor() {
@@ -18,7 +17,7 @@ export default class BotInfoCommand extends RuppyCommand {
     });
   }
 
-  public async exec(message: Message) {
+  public override async exec(message: Message) {
     const thisYear = new Date().getFullYear();
     const embed = new MessageEmbed()
       .setColor('#FFBF34')

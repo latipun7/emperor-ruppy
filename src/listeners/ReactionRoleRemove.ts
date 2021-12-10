@@ -1,6 +1,6 @@
+import type { MessageReaction, User } from 'discord.js';
 import ReactionRole from 'entities/ReactionRole';
 import RuppyListener from 'structures/RuppyListener';
-import type { MessageReaction, User } from 'discord.js';
 
 export default class ReactionRoleRemoveListener extends RuppyListener {
   public constructor() {
@@ -10,7 +10,7 @@ export default class ReactionRoleRemoveListener extends RuppyListener {
     });
   }
 
-  public async exec(reaction: MessageReaction, user: User) {
+  public override async exec(reaction: MessageReaction, user: User) {
     if (user.id === this.client.user?.id || !reaction.message.guild || user.bot)
       return;
 
