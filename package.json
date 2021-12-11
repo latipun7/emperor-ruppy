@@ -15,11 +15,11 @@
   },
   "scripts": {
     "dev": "ts-node --files -r tsconfig-paths/register -r dotenv/config ./src/index.ts",
-    "build": "tsc",
+    "build": "rimraf dist && tsc",
     "start": "pm2 start ./pm2.yml",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
     "format": "prettier --check .",
-    "test": "rimraf dist && jest",
+    "test": "jest",
     "postinstall": "husky install || true"
   },
   "dependencies": {
