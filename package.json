@@ -20,7 +20,7 @@
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
     "format": "prettier --check .",
     "test": "rimraf dist && jest",
-    "postinstall": "husky install"
+    "postinstall": "husky install || true"
   },
   "dependencies": {
     "axios": "^0.24.0",

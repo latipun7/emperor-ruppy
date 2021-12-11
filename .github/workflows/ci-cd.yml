@@ -54,6 +54,8 @@ jobs:
         uses: actions/cache@v2.1.7
         with:
           path: |
+            ./.yarn
+            ./.yarnrc.yml
             ./dist
             ./package.json
             ./pm2.yml
@@ -103,6 +105,8 @@ jobs:
         uses: actions/cache@v2.1.7
         with:
           path: |
+            ./.yarn
+            ./.yarnrc.yml
             ./dist
             ./package.json
             ./pm2.yml
