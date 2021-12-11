@@ -127,7 +127,7 @@ jobs:
         run: rsync -rltDvzOh --delete ./ production:${{ secrets.PRODUCTION_SSH_PATH }}
 
       - name: ✨ Install Dependencies in Remote Host
-        run: ssh production 'cd ${{ secrets.PRODUCTION_SSH_PATH }} && yarn --production --check-files'
+        run: ssh production 'cd ${{ secrets.PRODUCTION_SSH_PATH }} && yarn workspaces focus --all --production'
 
       - name: 🐥 Run Emperor Ruppy
         run: ssh production 'if pm2 describe emperor-ruppy; then pm2 restart emperor-ruppy; else cd ${{ secrets.PRODUCTION_SSH_PATH }} && yarn start; fi'
