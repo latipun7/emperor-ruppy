@@ -2121,10 +2121,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"common-tags@npm:^1.8.1":
-  version: 1.8.1
-  resolution: "common-tags@npm:1.8.1"
-  checksum: 991279f124c241eadc7bedb3aebae34b75bbbf92f15921241397a60cfd8bf711f9c2cefad1b133443c4dde65a721f71cee8f84f61125baa940f70a62cc301cc5
+"common-tags@npm:^1.8.2":
+  version: 1.8.2
+  resolution: "common-tags@npm:1.8.2"
+  checksum: 767a6255a84bbc47df49a60ab583053bb29a7d9687066a18500a516188a062c4e4cd52de341f22de0b07062e699b1b8fe3cfa1cb55b241cb9301aeb4f45b4dff
   languageName: node
   linkType: hard
 
@@ -2562,7 +2562,7 @@ __metadata:
     "@types/jest": ^26.0.24
     "@types/node": ^16.11.7
     axios: ^0.24.0
-    common-tags: ^1.8.1
+    common-tags: ^1.8.2
     discord-akairo: ^8.1.0
     discord.js: ^12.5.3
     dotenv: ^10.0.0
