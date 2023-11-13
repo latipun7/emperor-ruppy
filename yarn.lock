@@ -2858,6 +2858,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"emoji-regex@npm:^10.3.0":
+  version: 10.3.0
+  resolution: "emoji-regex@npm:10.3.0"
+  checksum: 5da48edfeb9462fb1ae5495cff2d79129974c696853fb0ce952cbf560f29a2756825433bf51cfd5157ec7b9f93f46f31d712e896d63e3d8ac9c3832bdb45ab73
+  languageName: node
+  linkType: hard
+
 "emoji-regex@npm:^8.0.0":
   version: 8.0.0
   resolution: "emoji-regex@npm:8.0.0"
@@ -2886,7 +2893,7 @@ __metadata:
     discord-akairo: ^8.1.0
     discord.js: ^12.5.3
     dotenv: ^10.0.0
-    emoji-regex: ^9.2.2
+    emoji-regex: ^10.3.0
     eslint: ^8.4.1
     husky: ^7.0.4
     jest: ^27.5.1
