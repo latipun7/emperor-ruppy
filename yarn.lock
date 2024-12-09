@@ -1451,10 +1451,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/common-tags@npm:^1.8.3":
-  version: 1.8.3
-  resolution: "@types/common-tags@npm:1.8.3"
-  checksum: 36f425b7ea5b59bdb3e3c875ec41d1d1b27608b8e19144ea1477803054652a9f51135542e1d7b7489d45aeafa72cc63ddfdd5c1880832b9e5555626143b3d798
+"@types/common-tags@npm:^1.8.4":
+  version: 1.8.4
+  resolution: "@types/common-tags@npm:1.8.4"
+  checksum: 9fad055269bd31eecd910fbf34acb80332b0c21e0fe8fd459df2dec11c183a3da3c96590964289ebd63a39658c23ca4412cc116558cde5a43a2738ff8056d765
   languageName: node
   linkType: hard
 
@@ -2878,7 +2878,7 @@ __metadata:
   dependencies:
     "@latipun7/eslint-config": ^1.0.4
     "@latipun7/tsconfig": ^1.2.1
-    "@types/common-tags": ^1.8.3
+    "@types/common-tags": ^1.8.4
     "@types/jest": ^27.5.2
     "@types/node": ^16.18.60
     axios: ^0.24.0
