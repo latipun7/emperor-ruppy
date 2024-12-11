@@ -1523,10 +1523,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^16.18.60":
-  version: 16.18.60
-  resolution: "@types/node@npm:16.18.60"
-  checksum: aa0c81c3f20e663584bf17a5968e54c419277af7982ef41f9d83edd1b7ab4c8af2583a3c8a9e1cf659c6307e6f787e1be20522855121371f5a46d1d54f8a70e3
+"@types/node@npm:^16.18.122":
+  version: 16.18.122
+  resolution: "@types/node@npm:16.18.122"
+  checksum: cfe162760349d6d6a4c7c122e38690ed7ea258b6b8c74d71cb06b265300295ad11da634a19877d2fd3b65cbe4473b774d17d9e6c2d7c995dd71f71ab46b86053
   languageName: node
   linkType: hard
 
@@ -2880,7 +2880,7 @@ __metadata:
     "@latipun7/tsconfig": ^1.2.1
     "@types/common-tags": ^1.8.4
     "@types/jest": ^27.5.2
-    "@types/node": ^16.18.60
+    "@types/node": ^16.18.122
     axios: ^0.24.0
     common-tags: ^1.8.2
     discord-akairo: ^8.1.0
