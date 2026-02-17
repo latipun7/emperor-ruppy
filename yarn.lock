@@ -2892,7 +2892,7 @@ __metadata:
     jest: ^27.5.1
     lint-staged: ^12.1.7
     pg: ^8.7.1
-    prettier: ^2.5.1
+    prettier: 2.5.1
     pretty-ms: ^7.0.1
     reflect-metadata: ^0.1.13
     rimraf: ^3.0.2
@@ -6054,7 +6054,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.5.1":
+"prettier@npm:2.5.1":
   version: 2.5.1
   resolution: "prettier@npm:2.5.1"
   bin:
